@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<style>
+html, body {width:100%; height:100%; margin:0; padding:0;}
+#map {position:absolute; top:0; bottom:0; left:0; right:0;}
+#passWrapper {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  z-index: 1000;
+}
+#passSelect {
+  padding: 6px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  background: white;
+  min-width: 220px;
+}
+</style>
+</head>
+<body>
+<div id="passWrapper">
+<select id="passSelect">
+<option value="" selected>Select Parking Pass</option>
+<option value="Green">Soho/First Year (Green)</option>
+<option value="Yellow">CMC/Second Year (Yellow)</option>
+<option value="BabyBlue">North Village/Third Year (Baby Blue)</option>
+<option value="Silver">North Village/Fourth Year (Silver)</option>
+<option value="Orange">Commuter/OLLI (Orange)</option>
+<option value="Purple">Faculty/Staff (Purple)</option>
+</select>
+</div>
+<div id="map"></div>
+
+<script>
+const map = L.map('map', {
+  center: [34.9275, -82.4401],
+  zoom: 16,
+  maxBounds: [[34.91, -82.46], [34.94, -82.42]]
+});
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  minZoom: 14, maxZoom: 19,
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+let baseLayer = null;
+let highlightLayer = null;
+let geoData = null;
+
+const passNames = {
+  Green: 'Soho/First Year (Green)',
+  Yellow: 'CMC/Second Year (Yellow)',
+  BabyBlue: 'North Village/Third Year (Baby Blue)',
+  Silver: 'North Village/Fourth Year (Silver)',
+  Orange: 'Commuter/OLLI (Orange)',
+  Purple: 'Faculty/Staff (Purple)'
+};
+
+const passColors = {
+  Green:    '#00cc00',
+  Yellow:   '#ffcc00',
+  BabyBlue: '#89cff0',
+  Silver:   '#808080',
+  Orange:   '#ff8c00',
+  Purple:   '#9932cc'
+};
+
+fetch('export.geojson')
+  .then(res => res.json())
+  .then(data => {
+    geoData = data;
+    baseLayer = L.geoJSON(data, {
+      style: {color: "#3388ff", weight: 2, fillColor: "#3388ff", fillOpacity: 0.2},
+      onEachFeature: (f, l) => {
+        let popup = '';
+        const tags = f.properties.tags || {};
+        if (tags.name) popup += `Name: ${tags.name}<br>`;
+        if (tags.capacity) popup += `Spots: ${tags.capacity}<br>`;
+        if (popup) l.bindPopup(popup);
+      }
+    }); // NO .addTo(map)
+  });
+
+document.getElementById('passSelect').addEventListener('change', e => {
+  const val = e.target.value;
+  if (highlightLayer) highlightLayer.remove();
+  if (baseLayer) baseLayer.remove();
+
+  if (!val || !geoData) return;
+
+  const color = passColors[val] || '#ff0000';
+
+  highlightLayer = L.geoJSON(geoData, {
+    filter: f => {
+      const passes = f.properties.pass;
+      return Array.isArray(passes) ? passes.includes(val) : passes === val;
+    },
+    style: () => ({
+      color: color,
+      weight: 5,
+      opacity: 1,
+      fillColor: color,
+      fillOpacity: 0.5
+    }),
+    onEachFeature: (f, l) => {
+      const name = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
+      l.bindPopup(`Allowed for: ${passNames[val]}<br>Name: ${name}`);
+    }
+  }).addTo(map);
+
+  if (highlightLayer.getLayers().length) map.fitBounds(highlightLayer.getBounds());
+});
+</script>
+</body>
+</html>
