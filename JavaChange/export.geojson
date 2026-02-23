@@ -8,7 +8,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Chiles/Haynsworth Lot",
-        "pass": ["Yellow", "Silver"],
+        "pass": ["Yellow", "Silver", "All"],
         "amenity": "parking",
         "type": "multipolygon"
       },
@@ -151,7 +151,7 @@
       "type": "Feature",
       "properties": {
         "@id": "NVABC",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver","All"],
         "amenity": "parking",
         "type": "multipolygon"
       },
@@ -824,7 +824,7 @@
       "type": "Feature",
       "properties": {
         "@id": "NVHI",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking",
         "parking": "surface",
         "type": "multipolygon"
@@ -1710,7 +1710,7 @@
       "type": "Feature",
       "properties": {
         "@id": "NVFEDJ",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking",
         "type": "multipolygon"
       },
@@ -2532,7 +2532,7 @@
         
         "amenity": "parking",
         "fee": "no",
-        "pass": ["Green", "Silver", "Orange", "Purple"],
+        "pass": ["Green", "Silver", "Orange", "Purple", "All"],
         "name": "Chapel Lot South",
         "parking": "surface",
         "type": "multipolygon"
@@ -3338,7 +3338,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Chapel Lot North",
-        "pass": ["Silver", "Orange", "Purple"],
+        "pass": ["Silver", "Orange", "Purple", "All"],
         "amenity": "parking",
         "fee": "no",
         "name": "Chapel Lot North",
@@ -3538,7 +3538,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Trone Parking",
-        "pass": ["Purple"],
+        "pass": ["Purple", "All"],
         "amenity": "parking",
         "parking": "surface",
         "type": "multipolygon"
@@ -3616,7 +3616,7 @@
   "type": "Feature",
   "properties": {
     "@id": "NVG",
-    "pass": ["BabyBlue", "Silver"],
+    "pass": ["BabyBlue", "Silver", "All"],
     "amenity": "parking"
   },
   "geometry": {
@@ -3653,7 +3653,7 @@
   "type": "Feature",
   "properties": {
     "@id": "NVA",
-    "pass": ["BabyBlue", "Silver"],
+    "pass": ["BabyBlue", "Silver", "All"],
     "amenity": "parking"
   },
   "geometry": {
@@ -3718,7 +3718,7 @@
       "type": "Feature",
       "properties": {
         "@id": "McAlister Lot",
-        "pass": ["Yellow", "Silver", "Orange"],
+        "pass": ["Yellow", "Silver", "Orange", "All"],
         "access": "private",
         "amenity": "parking",
         "fee": "no",
@@ -3782,7 +3782,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Roe Art Building Lot",
-        "pass": ["Yellow", "Silver"],
+        "pass": ["Yellow", "Silver", "All"],
         "amenity": "parking",
         "parking": "surface"
       },
@@ -3835,7 +3835,7 @@
       "type": "Feature",
       "properties": {
         "@id": "NVK",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking"
       },
       "geometry": {
@@ -3937,7 +3937,7 @@
       "properties": {
         "@id": "South Housing Parking Lot",
         "amenity": "parking",
-        "pass": ["Green", "Silver"],
+        "pass": ["Green", "Silver", "All"],
         "parking": "surface"
       },
       "geometry": {
@@ -3985,7 +3985,7 @@
       "type": "Feature",
       "properties": {
         "@id": "South Housing Parking Lot",
-        "pass": ["Green", "Silver"],
+        "pass": ["Green", "Silver", "All"],
         "amenity": "parking",
         "name": "South Housing Parking",
         "parking": "surface"
@@ -4107,7 +4107,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Music Building Lot",
-        "pass": ["Silver", "Orange", "Purple"],
+        "pass": ["Silver", "Orange", "Purple", "All"],
         "amenity": "parking",
         "fee": "no",
         "name": "Music Lot",
@@ -4199,7 +4199,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Athletics",
-        "pass": ["Purple"],
+        "pass": ["Purple", "All"],
         "amenity": "parking"
       },
       "geometry": {
@@ -4296,7 +4296,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Shack and Hut",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking"
       },
       "geometry": {
@@ -4332,7 +4332,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Cabin",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking"
       },
       "geometry": {
@@ -4368,7 +4368,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Cottage",
-        "pass": ["BabyBlue", "Silver"],
+        "pass": ["BabyBlue", "Silver", "All"],
         "amenity": "parking"
       },
       "geometry": {
@@ -4413,7 +4413,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Dining 1",
-        "pass": ["Purple"],
+        "pass": ["Purple", "All"],
         "access": "private",
         "amenity": "parking"
       },
@@ -4518,7 +4518,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Earle Health",
-        "pass": ["Purple"],
+        "pass": ["Purple", "All"],
         "access": "private",
         "amenity": "parking"
       },
@@ -4555,7 +4555,7 @@
       "type": "Feature",
       "properties": {
         "@id": "Dining 2",
-        "pass": ["Purple"],
+        "pass": ["Purple", "All"],
         "access": "private",
         "amenity": "parking"
       },
