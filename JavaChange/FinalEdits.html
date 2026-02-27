@@ -71,8 +71,7 @@ Purple: '#9932cc',
 All: '#FA9BCF'
 };
 
-fetch('https://mjultr6.github.io/CampusMapTest/export.geojson')
-.then(res => res.json())
+fetch('https://raw.githubusercontent.com/mjultr6/CampusMapTest/main/JavaChange/export.geojson').then(res => res.json())
 .then(data => {
 geoData = data;
 baseLayer = L.geoJSON(data, {
