@@ -2567,7 +2567,7 @@
 "@id": "Chapel Lot South",
 "amenity": "parking",
 "fee": "no",
-"pass": ["Green", "Silver", "Orange", "All"],
+"pass": ["Green", "Silver", "Orange","Purple", "All"],
 "name": "Chapel Lot South",
 "parking": "surface",
 "type": "multipolygon"
