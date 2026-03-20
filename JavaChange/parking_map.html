@@ -117,6 +117,26 @@ html, body {
   flex-shrink: 0;
 }
 
+/* ── Nav button ── */
+#navBtn {
+  margin-left: auto;
+  padding: 7px 14px;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #444;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+#navBtn:hover {
+  background: rgba(0,0,0,0.08);
+  border-color: #aaa;
+  color: #111;
+}
+
 /* ── Map nudge for header ── */
 #map {
   top: 58px;
@@ -160,6 +180,7 @@ html, body {
       </button>
     </div>
   </div>
+  <a href="../CLP API and Map/clp_map.html" id="navBtn">🗓️ CLP Map</a>
 </div>
 
 <div id="map"></div>

@@ -222,6 +222,31 @@
     font-size: 1rem;
   }
 
+  /* ── Nav button ── */
+  #navBtn {
+    margin-left: auto;
+    padding: 7px 14px;
+    background: rgba(130,90,200,0.12);
+    border: 1px solid rgba(130,90,200,0.35);
+    border-radius: 4px;
+    color: var(--purple-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  #navBtn:hover {
+    background: rgba(130,90,200,0.25);
+    border-color: var(--purple);
+    color: white;
+  }
+
+  /* ── Zoom control ── */
+  .leaflet-top.leaflet-left {
+    top: 78px;
+  }
+
   /* ── Map ── */
   #map {
     position: absolute;
@@ -393,6 +418,7 @@
     </button>
   </div>
   <div id="eventCount"></div>
+  <a href="../JavaChange/parking_map.html" id="navBtn">🅿️ Parking Map</a>
 </div>
 
 <!-- Calendar popup -->
@@ -448,9 +474,10 @@ const styleActive = {
 // ── Map setup ─────────────────────────────────────────────────────────────────
 const map = L.map('map', {
   center: [34.9260, -82.4375], zoom: 16,
-  zoomControl: true,
+  zoomControl: false,
   maxBounds: [[34.91, -82.46], [34.94, -82.42]]
 });
+L.control.zoom({ position: 'topleft' }).addTo(map);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; OpenStreetMap &copy; CARTO',
   subdomains: 'abcd', minZoom: 14, maxZoom: 19
