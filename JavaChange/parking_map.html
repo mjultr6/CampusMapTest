@@ -15,8 +15,14 @@ html, body {
   font-family: 'DM Sans', sans-serif;
 }
 
+:root {
+  --header-height: 58px;
+}
+
 #map {
-  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  position: absolute;
+  top: var(--header-height);
+  bottom: 0; left: 0; right: 0;
   touch-action: pan-x pan-y;
 }
 
@@ -28,25 +34,50 @@ html, body {
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(8px);
   border-bottom: 2px solid #e0e0e0;
-  padding: 10px 20px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+@media (min-width: 640px) {
+  #header {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 20px;
+  }
+}
+
+/* ── Row 1: title + CLP link ── */
+.header-row1 {
   display: flex;
   align-items: center;
-  gap: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .header-row1 { flex-shrink: 0; }
 }
 
 #header h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #1a1a1a;
   white-space: nowrap;
 }
 
+@media (min-width: 640px) {
+  #header h1 { font-size: 1.15rem; }
+}
+
 #header h1 span {
   display: block;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -54,48 +85,74 @@ html, body {
 }
 
 .divider {
-  width: 1px;
-  height: 32px;
-  background: #ddd;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .divider {
+    display: block;
+    width: 1px;
+    height: 32px;
+    background: #ddd;
+    flex-shrink: 0;
+  }
 }
 
 /* ── Pass selector wrapper ── */
 #passWrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 #passWrapper label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #888;
   white-space: nowrap;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  #passWrapper label { display: block; }
 }
 
 /* ── Pass buttons ── */
 #passButtons {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .pass-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+  gap: 5px;
+  padding: 5px 10px;
   border-radius: 20px;
   border: 2px solid transparent;
   background: #f5f5f5;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
   color: #333;
   white-space: nowrap;
+  touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+  .pass-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    gap: 6px;
+  }
 }
 
 .pass-btn:hover {
@@ -111,35 +168,49 @@ html, body {
 }
 
 .pass-btn .dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
+@media (min-width: 640px) {
+  .pass-btn .dot { width: 10px; height: 10px; }
+}
+
 /* ── Nav button ── */
 #navBtn {
-  margin-left: auto;
-  padding: 7px 14px;
+  padding: 6px 10px;
   background: rgba(0,0,0,0.04);
   border: 1px solid #ddd;
   border-radius: 4px;
   color: #444;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  touch-action: manipulation;
 }
+
+@media (min-width: 640px) {
+  #navBtn {
+    margin-left: auto;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+  }
+}
+
 #navBtn:hover {
   background: rgba(0,0,0,0.08);
   border-color: #aaa;
   color: #111;
 }
 
-/* ── Map nudge for header ── */
-#map {
-  top: 58px;
+/* ── Leaflet zoom control nudge ── */
+.leaflet-top.leaflet-left {
+  top: calc(var(--header-height) + 10px);
 }
 </style>
 </head>
@@ -147,13 +218,16 @@ html, body {
 <body>
 
 <div id="header">
-  <div>
+  <!-- Row 1: title + CLP nav -->
+  <div class="header-row1">
     <h1>
       <span>Furman University</span>
       Parking Map
     </h1>
+    <a href="../CLP API and Map/clp_map.html" id="navBtn">🗓️ CLP Map</a>
   </div>
-  <div class="divider"></div>
+
+  <!-- Row 2: pass type selector -->
   <div id="passWrapper">
     <label>Pass Type</label>
     <div id="passButtons">
@@ -180,7 +254,6 @@ html, body {
       </button>
     </div>
   </div>
-  <a href="../CLP API and Map/clp_map.html" id="navBtn">🗓️ CLP Map</a>
 </div>
 
 <div id="map"></div>
@@ -232,29 +305,16 @@ const passActiveBg = {
   All: '#e080b0'
 };
 
-fetch('furman_parking.geojson')
-  .then(res => res.json())
-  .then(data => {
-    geoData = data;
-    baseLayer = L.geoJSON(data, {
-      style: {
-        color: "#3388ff",
-        weight: 2,
-        fillColor: "#3388ff",
-        fillOpacity: 0.2
-      },
-      onEachFeature: (f, l) => {
-        let popup = '';
-        const tags = f.properties.tags || {};
-        if (tags.name) popup += `Name: ${tags.name}<br>`;
-        if (tags.capacity) popup += `Spots: ${tags.capacity}<br>`;
-        if (popup) l.bindPopup(popup);
-      }
-    }); // Don't add to map yet — wait for a pass to be selected
-    maskLayer.addTo(map); // Keep mask always on top
-  });
+// ── Dynamic header height ─────────────────────────────────────────────────────
+function updateHeaderHeight() {
+  const h = document.getElementById('header').offsetHeight;
+  document.documentElement.style.setProperty('--header-height', h + 'px');
+  map.invalidateSize();
+}
 
-// Police station mask
+window.addEventListener('resize', updateHeaderHeight);
+
+// ── Police station mask ───────────────────────────────────────────────────────
 const policeMask = {
   "type": "Feature",
   "properties": { "name": "Mask" },
@@ -274,12 +334,37 @@ const maskLayer = L.geoJSON(policeMask, {
   style: { color: "#FFFFE4", fillColor: "#FFFFE4", fillOpacity: 1, weight: 0 }
 });
 
+fetch('furman_parking.geojson')
+  .then(res => res.json())
+  .then(data => {
+    geoData = data;
+    baseLayer = L.geoJSON(data, {
+      style: {
+        color: "#3388ff",
+        weight: 2,
+        fillColor: "#3388ff",
+        fillOpacity: 0.2
+      },
+      onEachFeature: (f, l) => {
+        let popup = '';
+        const tags = f.properties.tags || {};
+        if (tags.name) popup += `Name: ${tags.name}<br>`;
+        if (tags.capacity) popup += `Spots: ${tags.capacity}<br>`;
+        if (popup) l.bindPopup(popup);
+      }
+    });
+    maskLayer.addTo(map);
+    updateHeaderHeight();
+  });
+
 function selectPass(val) {
-  // Toggle off if already active
   if (activeVal === val) {
     activeVal = null;
-    document.querySelectorAll('.pass-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.pass-btn').forEach(b => b.style.background = '');
+    document.querySelectorAll('.pass-btn').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.borderColor = '';
+    });
     if (highlightLayer) { highlightLayer.remove(); highlightLayer = null; }
     if (baseLayer) baseLayer.remove();
     maskLayer.addTo(map);
@@ -288,7 +373,6 @@ function selectPass(val) {
 
   activeVal = val;
 
-  // Update button styles
   document.querySelectorAll('.pass-btn').forEach(b => {
     b.classList.remove('active');
     b.style.background = '';
@@ -337,7 +421,6 @@ function selectPass(val) {
   if (highlightLayer && highlightLayer.getLayers().length)
     map.fitBounds(highlightLayer.getBounds());
 
-  // Always keep mask on top
   maskLayer.addTo(map);
 }
 
@@ -346,6 +429,9 @@ document.querySelectorAll('.pass-btn').forEach(btn => {
 });
 
 map.on("click", e => console.log("Clicked:", e.latlng));
+
+// Initial height set after fonts/layout settle
+requestAnimationFrame(() => updateHeaderHeight());
 </script>
 
 </body>
