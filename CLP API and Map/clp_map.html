@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Furman CLP Events Map</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+<style>
+  :root {
+    --purple-dark: #3B1F5E;
+    --purple: #9B6FD4;
+    --text-light: #F0ECF8;
+    --bg-dark: #0F0D14;
+    --bg-mid: #2A2040;
+    --purple-light: #C9A8F0;
+    --grey: #7A6E99;
+    --purple-bright: #7C3AED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  #header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(15,13,20,0.97) 0%, rgba(15,13,20,0.85) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(130,90,200,0.25);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  #header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--purple-light);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  #header h1 span {
+    color: var(--grey);
+    font-weight: 400;
+    font-size: 0.9rem;
+    display: block;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(130,90,200,0.3);
+  }
+
+  /* ── Date selector ── */
+  #dateWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  #dateWrapper label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  #calBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(130,90,200,0.08);
+    border: 1px solid rgba(130,90,200,0.35);
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 200px;
+    transition: border-color 0.2s, background 0.2s;
+    text-align: left;
+  }
+
+  #calBtn:hover { border-color: var(--purple); background: rgba(130,90,200,0.14); }
+  #calBtn .cal-icon { font-size: 1rem; flex-shrink: 0; }
+  #calBtn .cal-text { flex: 1; }
+  #calBtn .cal-arrow { font-size: 0.65rem; color: var(--purple); margin-left: 4px; }
+
+  /* ── Calendar popup ── */
+  #calPopup {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15,13,20,0.98);
+    border: 1px solid rgba(130,90,200,0.4);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    min-width: 300px;
+  }
+
+  #calPopup.open { display: block; animation: fadeDown 0.18s ease; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .cal-nav button {
+    background: none;
+    border: 1px solid rgba(130,90,200,0.3);
+    color: var(--purple);
+    border-radius: 4px;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+
+  .cal-nav button:hover { background: rgba(130,90,200,0.15); }
+
+  .cal-month-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--purple-light);
+    font-weight: 600;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+
+  .cal-dow {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--grey);
+    text-align: center;
+    padding-bottom: 6px;
+  }
+
+  .cal-day {
+    text-align: center;
+    padding: 6px 2px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    cursor: default;
+    color: rgba(154,136,112,0.4);
+    transition: background 0.15s;
+    position: relative;
+  }
+
+  .cal-day.has-events {
+    color: var(--text-light);
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .cal-day.has-events::after {
+    content: '';
+    display: block;
+    width: 4px; height: 4px;
+    background: var(--purple);
+    border-radius: 50%;
+    margin: 2px auto 0;
+  }
+
+  .cal-day.has-events:hover { background: rgba(130,90,200,0.2); color: var(--purple-light); }
+
+  .cal-day.selected {
+    background: var(--purple) !important;
+    color: var(--bg-dark) !important;
+    font-weight: 700;
+  }
+
+  .cal-day.selected::after { background: var(--bg-dark) !important; }
+
+  .cal-day.empty { cursor: default; }
+
+  /* ── Event count badge ── */
+  #eventCount {
+    font-size: 0.75rem;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  #eventCount strong {
+    color: var(--purple);
+    font-size: 1rem;
+  }
+
+  /* ── Map ── */
+  #map {
+    position: absolute;
+    top: 68px; bottom: 0; left: 0; right: 0;
+  }
+
+  /* ── Leaflet popup overrides ── */
+  .leaflet-popup-content-wrapper {
+    background: rgba(15,13,20,0.97) !important;
+    border: 1px solid rgba(130,90,200,0.4) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+    color: var(--text-light) !important;
+    font-family: 'DM Sans', sans-serif !important;
+    max-width: 320px !important;
+    padding: 0 !important;
+  }
+
+  .leaflet-popup-content {
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+  .leaflet-popup-tip {
+    background: rgba(15,13,20,0.97) !important;
+  }
+
+  .leaflet-popup-close-button {
+    color: var(--grey) !important;
+    font-size: 18px !important;
+    padding: 8px 10px !important;
+    top: 4px !important;
+    right: 4px !important;
+  }
+
+  .leaflet-popup-close-button:hover {
+    color: var(--purple) !important;
+  }
+
+  /* ── Popup content ── */
+  .popup-inner {
+    padding: 16px 18px 16px;
+  }
+
+  .popup-building {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--purple-light);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(130,90,200,0.2);
+    padding-right: 20px;
+  }
+
+  .popup-event {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .popup-event:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .popup-event-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-light);
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+
+  .popup-event-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .popup-time {
+    font-size: 0.75rem;
+    color: var(--purple);
+    font-weight: 500;
+  }
+
+  .popup-room {
+    font-size: 0.72rem;
+    color: var(--grey);
+    font-style: italic;
+  }
+
+  .popup-no-events {
+    font-size: 0.82rem;
+    color: var(--grey);
+    font-style: italic;
+    padding: 4px 0;
+  }
+
+  /* ── Legend ── */
+  #legend {
+    position: absolute;
+    bottom: 24px;
+    right: 12px;
+    z-index: 1000;
+    background: rgba(15,13,20,0.92);
+    border: 1px solid rgba(130,90,200,0.25);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.72rem;
+    color: var(--grey);
+    backdrop-filter: blur(6px);
+  }
+
+  #legend div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  #legend div:last-child { margin-bottom: 0; }
+
+  .legend-swatch {
+    width: 14px; height: 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── No date selected overlay ── */
+  #noDateMsg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  #noDateMsg .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: rgba(237,217,138,0.35);
+    margin-bottom: 6px;
+  }
+
+  #noDateMsg .small {
+    font-size: 0.8rem;
+    color: rgba(154,136,112,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>
+      <span>Furman University</span>
+      CLP Events Map
+    </h1>
+  </div>
+  <div class="divider"></div>
+  <div id="dateWrapper">
+    <label>Select Date</label>
+    <button id="calBtn">
+      <span class="cal-icon">&#128197;</span>
+      <span class="cal-text" id="calBtnText">&#8212; Choose a date &#8212;</span>
+      <span class="cal-arrow">&#9660;</span>
+    </button>
+  </div>
+  <div id="eventCount"></div>
+</div>
+
+<!-- Calendar popup -->
+<div id="calPopup">
+  <div class="cal-nav">
+    <button id="prevMonth">&#8592;</button>
+    <span class="cal-month-label" id="calMonthLabel"></span>
+    <button id="nextMonth">&#8594;</button>
+  </div>
+  <div class="cal-grid" id="calGrid"></div>
+</div>
+
+<div id="map"></div>
+
+<div id="loadError" style="display:none;position:absolute;top:68px;left:0;right:0;z-index:1500;background:rgba(107,29,29,0.95);border-bottom:1px solid rgba(200,100,50,0.5);padding:12px 24px;align-items:center;gap:12px;font-size:0.85rem;color:#f5c8a0;backdrop-filter:blur(6px);">
+  <span style="font-size:1.1rem;">⚠️</span>
+  <span>Files not found. In VS Code terminal, run: <code style="background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:3px;font-family:monospace;">python -m http.server 8000</code> then open <code style="background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:3px;font-family:monospace;">http://localhost:8000/clp_map.html</code></span>
+</div>
+
+<div id="noDateMsg">
+  <div class="big">Select a date above</div>
+  <div class="small">to see CLP events on campus</div>
+</div>
+
+<div id="legend">
+  <div><span class="legend-swatch" style="background:#9B6FD4;"></span> Has CLP events</div>
+  <div><span class="legend-swatch" style="background:rgba(80,50,130,0.25);border:1px solid rgba(130,90,200,0.2)"></span> No events today</div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+let BUILDINGS = null;
+let clpEvents = [];
+let eventDatesSet = new Set();
+let calViewDate = new Date(2026, new Date().getMonth(), 1);
+let selectedDate = '';
+let baseLayer = null;
+let eventLayer = null;
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+const styleBase = {
+  color: 'rgba(130,90,200,0.25)', weight: 1,
+  fillColor: 'rgba(80,50,130,0.15)', fillOpacity: 1
+};
+const styleActive = {
+  color: '#9B6FD4', weight: 2.5,
+  fillColor: '#9B6FD4', fillOpacity: 0.35
+};
+
+// ── Map setup ─────────────────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [34.9260, -82.4375], zoom: 16,
+  zoomControl: true,
+  maxBounds: [[34.91, -82.46], [34.94, -82.42]]
+});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  subdomains: 'abcd', minZoom: 14, maxZoom: 19
+}).addTo(map);
+
+// ── Room → building matching ──────────────────────────────────────────────────
+// ── Hardcoded room → building id lookup ──────────────────────────────────────
+const ROOM_TO_BUILDING = {
+  // Amphitheater
+  "Amphitheater": "Amphitheater",
+  "Amphitheater, Furman Lake Amphitheater Parking Lot": "Amphitheater",
+  "Furman Lake Amphitheater Parking Lot": "Amphitheater",
+
+  // Daniel Chapel
+  "Chapel Main Sanctuary": "Daniel Chapel",
+  "Chapel Bryan Garden Room": "Daniel Chapel",
+  "Chapel Bryan Garden Room,Chapel Bryan Garden Room": "Daniel Chapel",
+
+  // Daniel Music Building
+  "Daniel Recital Hall": "Daniel Music Building",
+
+  // Furman Hall
+  "Furman Hall 214 - McEachern Lecture Hall": "Furman Hall",
+
+  // Johns Hall
+  "Johns Hall 101": "Johns Hall",
+  "Johns Hall 109": "Johns Hall",
+
+  // McAlister Auditorium
+  "McAlister Auditorium": "McAlister Auditorium",
+
+  // Plyler Hall
+  "Patrick Lecture Hall": "Plyler Hall",
+
+  // Roe Art Building
+  "Roe Art Building Gallery": "Roe Art Building",
+  "Roe Art Building Littlejohn Lecture Room": "Roe Art Building",
+
+  // Furman Theatre / Playhouse
+  "Playhouse": "Playhouse",
+
+  // Trone Student Center
+  "Trone Student Center Burgiss Theater": "Trone Student Center",
+  "Trone Student Center Watkins Room": "Trone Student Center",
+  "Trone Student Center Watkins Room Center Section": "Trone Student Center",
+  "Trone Student Center Watkins Room Lobby": "Trone Student Center",
+  "Trone Student Center Point of View Fire Pit": "Trone Student Center",
+
+  // Younts Conference Center
+  "Younts Conference Center Great Hall": "Younts Conference Center",
+  "Younts Conference Center Shaw Hall": "Younts Conference Center",
+  "Younts Conference Center Birmingham Room 110A": "Younts Conference Center",
+  "Younts Conference Center Atlanta Room 120B": "Younts Conference Center",
+  "Younts Conference Center Atlanta Room 120A": "Younts Conference Center",
+  "Younts Conference Center Birmingham Room": "Younts Conference Center",
+
+  // Hartness Pavilion / Trustees
+  "Hartness Pavilion": "Hartness and Trustees",
+  "Trustees Dining Room": "Hartness and Trustees",
+};
+
+function getBuildingForLocation(loc) {
+  if (!loc) return null;
+
+  // Strip trailing ellipsis and trim
+  const clean = loc.replace(/….*$/, '').trim();
+
+  // Direct match
+  if (ROOM_TO_BUILDING[clean]) return ROOM_TO_BUILDING[clean];
+
+  // Try each comma-separated part (some events list multiple rooms)
+  const parts = clean.split(',').map(s => s.trim());
+  for (const part of parts) {
+    if (ROOM_TO_BUILDING[part]) return ROOM_TO_BUILDING[part];
+  }
+
+  // Fallback: case-insensitive partial match
+  const lower = clean.toLowerCase();
+  for (const [key, bid] of Object.entries(ROOM_TO_BUILDING)) {
+    if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return bid;
+  }
+
+  return null;
+}
+
+// ── Map rendering ─────────────────────────────────────────────────────────────
+function renderMap(date) {
+  if (!BUILDINGS) return;
+  if (baseLayer) { baseLayer.remove(); baseLayer = null; }
+  if (eventLayer) { eventLayer.remove(); eventLayer = null; }
+
+  const noMsg = document.getElementById('noDateMsg');
+
+  if (!date) {
+    noMsg.style.display = 'block';
+    document.getElementById('eventCount').innerHTML = '';
+    baseLayer = L.geoJSON(BUILDINGS, {
+      style: styleBase,
+      filter: f => f.geometry.type === 'Polygon'
+    }).addTo(map);
+    return;
+  }
+
+  noMsg.style.display = 'none';
+
+  console.log('[CLP] renderMap called with date:', JSON.stringify(date));
+  console.log('[CLP] clpEvents total:', clpEvents.length);
+  console.log('[CLP] sample event dates:', clpEvents.slice(0,3).map(e => JSON.stringify(e.date)));
+  const dayEvents = clpEvents.filter(e => e.date === date);
+  console.log('[CLP] dayEvents for this date:', dayEvents.length);
+  const buildingEvents = {};
+  dayEvents.forEach(ev => {
+    const bid = getBuildingForLocation(ev.location);
+    console.log('[CLP] event:', ev.title, '| location:', ev.location, '| bid:', bid);
+    if (bid) {
+      if (!buildingEvents[bid]) buildingEvents[bid] = [];
+      buildingEvents[bid].push(ev);
+    }
+  });
+  const bKeys = Object.keys(buildingEvents);
+  const fIds = BUILDINGS.features.map(f => f.id);
+  console.log('[CLP] buildingEvents keys:', bKeys);
+  console.log('[CLP] building feature ids:', fIds);
+  console.log('[CLP] matches:', bKeys.filter(k => fIds.includes(k)));
+  console.log('[CLP] mismatches:', bKeys.filter(k => !fIds.includes(k)));
+  const activeCount = Object.keys(buildingEvents).length;
+  document.getElementById('eventCount').innerHTML =
+    '<strong>' + dayEvents.length + '</strong> event' + (dayEvents.length !== 1 ? 's' : '') +
+    ' at <strong>' + activeCount + '</strong> location' + (activeCount !== 1 ? 's' : '');
+
+  baseLayer = L.geoJSON(BUILDINGS, {
+    style: f => buildingEvents[f.id] ? styleActive : styleBase,
+    filter: f => f.geometry.type === 'Polygon' || f.geometry.type === 'LineString',
+    onEachFeature: (f, layer) => {
+      const evs = buildingEvents[f.id];
+      const name = f.properties.name || f.id;
+      if (evs && evs.length) {
+        let html = '<div class="popup-inner">';
+        html += '<div class="popup-building">&#128205; ' + name + '</div>';
+        evs.forEach(ev => {
+          html += '<div class="popup-event">';
+          html += '<div class="popup-event-title">' + ev.title + '</div>';
+          html += '<div class="popup-event-meta">';
+          if (ev.time) html += '<span class="popup-time">&#9200; ' + ev.time + '</span>';
+          if (ev.location) html += '<span class="popup-room">' + ev.location + '</span>';
+          html += '</div>';
+          if (ev.detail_url) {
+            html += '<a href="' + ev.detail_url + '" target="_blank" style="font-size:0.72rem;color:#9B6FD4;text-decoration:none;margin-top:3px;display:inline-block;">View details &rarr;</a>';
+          }
+          html += '</div>';
+        });
+        html += '</div>';
+        layer.bindPopup(html, { maxWidth: 320 });
+        layer.on('mouseover', () => layer.setStyle({ fillOpacity: 0.6, weight: 3, color: '#C9A8F0' }));
+        layer.on('mouseout', () => layer.setStyle(styleActive));
+      } else {
+        layer.bindPopup('<div class="popup-inner"><div class="popup-building">' + name + '</div><div class="popup-no-events">No CLP events on this date.</div></div>');
+      }
+    }
+  }).addTo(map);
+}
+
+// ── Calendar ──────────────────────────────────────────────────────────────────
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  const label = document.getElementById('calMonthLabel');
+  const y = calViewDate.getFullYear();
+  const m = calViewDate.getMonth();
+
+  label.textContent = MONTHS[m] + ' ' + y;
+  grid.innerHTML = '';
+
+  DAYS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-dow';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = MONTHS[m] + ' ' + d + ', ' + y;
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+    if (eventDatesSet.has(dateStr)) {
+      el.classList.add('has-events');
+      el.addEventListener('click', (e) => { e.stopPropagation(); selectDate(dateStr); });
+    }
+    if (dateStr === selectedDate) el.classList.add('selected');
+    grid.appendChild(el);
+  }
+}
+
+function selectDate(dateStr) {
+  selectedDate = dateStr;
+  document.getElementById('calBtnText').textContent = dateStr;
+  document.getElementById('calPopup').classList.remove('open');
+  renderCalendar();
+  console.log('[CLP] selectDate called with:', dateStr);
+  setTimeout(() => renderMap(dateStr), 50);
+}
+
+
+
+// ── All calendar event listeners wired here ──────────────────────────────────
+document.getElementById('calBtn').addEventListener('click', function(e) {
+  e.stopPropagation();
+  const popup = document.getElementById('calPopup');
+  const isOpen = popup.classList.contains('open');
+  if (isOpen) {
+    popup.classList.remove('open');
+  } else {
+    popup.classList.add('open');
+    renderCalendar();
+  }
+});
+
+document.getElementById('prevMonth').addEventListener('click', function(e) {
+  e.stopPropagation();
+  calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth() - 1, 1);
+  renderCalendar();
+});
+
+document.getElementById('nextMonth').addEventListener('click', function(e) {
+  e.stopPropagation();
+  calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + 1, 1);
+  renderCalendar();
+});
+
+document.addEventListener('click', function(e) {
+  const popup = document.getElementById('calPopup');
+  const btn = document.getElementById('calBtn');
+  if (!popup.contains(e.target) && !btn.contains(e.target)) {
+    popup.classList.remove('open');
+  }
+});
+
+// ── Load data & initialize ────────────────────────────────────────────────────
+Promise.all([
+  fetch('furman_buildings.geojson').then(r => r.json()),
+  fetch('clp_all_events.json').then(r => r.json()).catch(() => [])
+]).then(([buildings, events]) => {
+  BUILDINGS = buildings;
+  clpEvents = events;
+  eventDatesSet = new Set(clpEvents.map(e => e.date.trim()));
+
+  // Navigate calendar to month of first event
+  // calViewDate stays as initialized (current month, 2026)
+
+
+
+  renderMap('');
+}).catch(err => {
+  console.warn('Error loading data:', err);
+});
+</script>
+</body>
+</html>

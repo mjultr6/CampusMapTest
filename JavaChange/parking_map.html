@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: 'DM Sans', sans-serif;
+}
+
+#map {
+  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  touch-action: pan-x pan-y;
+}
+
+/* ── Header ── */
+#header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid #e0e0e0;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+#header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+#header h1 span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+}
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background: #ddd;
+}
+
+/* ── Pass selector wrapper ── */
+#passWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#passWrapper label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  white-space: nowrap;
+}
+
+/* ── Pass buttons ── */
+#passButtons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pass-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background: #f5f5f5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #333;
+  white-space: nowrap;
+}
+
+.pass-btn:hover {
+  background: #ececec;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.pass-btn.active {
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+}
+
+.pass-btn .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Map nudge for header ── */
+#map {
+  top: 58px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="header">
+  <div>
+    <h1>
+      <span>Furman University</span>
+      Parking Map
+    </h1>
+  </div>
+  <div class="divider"></div>
+  <div id="passWrapper">
+    <label>Pass Type</label>
+    <div id="passButtons">
+      <button class="pass-btn" data-val="Green">
+        <span class="dot" style="background:#00cc00"></span> South Housing
+      </button>
+      <button class="pass-btn" data-val="Yellow">
+        <span class="dot" style="background:#ffcc00"></span> Clark Murphy
+      </button>
+      <button class="pass-btn" data-val="BabyBlue">
+        <span class="dot" style="background:#00a9f9"></span> North Village
+      </button>
+      <button class="pass-btn" data-val="Silver">
+        <span class="dot" style="background:#808080"></span> Silver/Senior
+      </button>
+      <button class="pass-btn" data-val="Orange">
+        <span class="dot" style="background:#ff8c00"></span> Commuter/Grad
+      </button>
+      <button class="pass-btn" data-val="Purple">
+        <span class="dot" style="background:#9932cc"></span> Faculty/Staff
+      </button>
+      <button class="pass-btn" data-val="All">
+        <span class="dot" style="background:#FA9BCF"></span> All Lots
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script>
+const map = L.map('map', {
+  center: [34.9275, -82.4401],
+  zoom: 16,
+  maxBounds: [[34.91, -82.46], [34.94, -82.42]]
+});
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  minZoom: 14,
+  maxZoom: 19,
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+let baseLayer = null;
+let highlightLayer = null;
+let geoData = null;
+let activeVal = null;
+
+const passNames = {
+  Green: 'South Housing (Green)',
+  Yellow: 'Clark Murphy Complex (Yellow)',
+  BabyBlue: 'North Village/Bell Tower (Baby Blue)',
+  Silver: 'Silver/Senior (Silver)',
+  Orange: 'Commuter/Graduate/OLLI (Orange)',
+  Purple: 'Faculty/Staff (Purple)'
+};
+
+const passColors = {
+  Green: '#00cc00',
+  Yellow: '#ffcc00',
+  BabyBlue: '#00a9f9',
+  Silver: '#808080',
+  Orange: '#ff8c00',
+  Purple: '#9932cc',
+  All: '#FA9BCF'
+};
+
+const passActiveBg = {
+  Green: '#00cc00',
+  Yellow: '#e6b800',
+  BabyBlue: '#00a9f9',
+  Silver: '#808080',
+  Orange: '#ff8c00',
+  Purple: '#9932cc',
+  All: '#e080b0'
+};
+
+fetch('furman_parking.geojson')
+  .then(res => res.json())
+  .then(data => {
+    geoData = data;
+    baseLayer = L.geoJSON(data, {
+      style: {
+        color: "#3388ff",
+        weight: 2,
+        fillColor: "#3388ff",
+        fillOpacity: 0.2
+      },
+      onEachFeature: (f, l) => {
+        let popup = '';
+        const tags = f.properties.tags || {};
+        if (tags.name) popup += `Name: ${tags.name}<br>`;
+        if (tags.capacity) popup += `Spots: ${tags.capacity}<br>`;
+        if (popup) l.bindPopup(popup);
+      }
+    }); // Don't add to map yet — wait for a pass to be selected
+    maskLayer.addTo(map); // Keep mask always on top
+  });
+
+// Police station mask
+const policeMask = {
+  "type": "Feature",
+  "properties": { "name": "Mask" },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-82.43555, 34.92860],
+      [-82.43555, 34.92838],
+      [-82.43488, 34.92838],
+      [-82.43488, 34.92878],
+      [-82.43555, 34.92860]
+    ]]
+  }
+};
+
+const maskLayer = L.geoJSON(policeMask, {
+  style: { color: "#FFFFE4", fillColor: "#FFFFE4", fillOpacity: 1, weight: 0 }
+});
+
+function selectPass(val) {
+  // Toggle off if already active
+  if (activeVal === val) {
+    activeVal = null;
+    document.querySelectorAll('.pass-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pass-btn').forEach(b => b.style.background = '');
+    if (highlightLayer) { highlightLayer.remove(); highlightLayer = null; }
+    if (baseLayer) baseLayer.remove();
+    maskLayer.addTo(map);
+    return;
+  }
+
+  activeVal = val;
+
+  // Update button styles
+  document.querySelectorAll('.pass-btn').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.borderColor = 'transparent';
+  });
+  const activeBtn = document.querySelector(`.pass-btn[data-val="${val}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.style.background = passActiveBg[val];
+    activeBtn.style.borderColor = passActiveBg[val];
+  }
+
+  if (highlightLayer) { highlightLayer.remove(); highlightLayer = null; }
+  if (baseLayer) { baseLayer.remove(); }
+
+  if (!geoData) return;
+
+  if (val === 'All') {
+    highlightLayer = L.geoJSON(geoData, {
+      style: {
+        color: '#FA9BCF', weight: 3, opacity: 0.9,
+        fillColor: '#FA9BCF', fillOpacity: 0.35
+      },
+      onEachFeature: (f, l) => {
+        const passes = f.properties.pass || [];
+        const allowed = passes.map(p => passNames[p] || p).join(', ') || 'None';
+        const name = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
+        l.bindPopup(`<strong>${name}</strong><br>${allowed}`);
+      }
+    }).addTo(map);
+  } else {
+    const color = passColors[val];
+    highlightLayer = L.geoJSON(geoData, {
+      filter: f => {
+        const passes = f.properties.pass;
+        return Array.isArray(passes) ? passes.includes(val) : passes === val;
+      },
+      style: () => ({ color, weight: 5, opacity: 1, fillColor: color, fillOpacity: 0.5 }),
+      onEachFeature: (f, l) => {
+        const name = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
+        l.bindPopup(`<strong>Allowed for:</strong> ${passNames[val]}<br><strong>Lot:</strong> ${name}`);
+      }
+    }).addTo(map);
+  }
+
+  if (highlightLayer && highlightLayer.getLayers().length)
+    map.fitBounds(highlightLayer.getBounds());
+
+  // Always keep mask on top
+  maskLayer.addTo(map);
+}
+
+document.querySelectorAll('.pass-btn').forEach(btn => {
+  btn.addEventListener('click', () => selectPass(btn.dataset.val));
+});
+
+map.on("click", e => console.log("Clicked:", e.latlng));
+</script>
+
+</body>
+</html>
