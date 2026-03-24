@@ -186,6 +186,7 @@
     "building": "university",
     "building:levels": "2",
     "name": "Charles Daniel Dining Hall",
+    "rooms":["Daniel Dining Hall", "Hartness Pavilion", "Trustees Dining Room"],
     "type": "multipolygon"
   },
   "geometry": {
