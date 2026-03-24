@@ -1,0 +1,1017 @@
+[
+    {
+        "sport": "Women's Soccer",
+        "opponent": "South Carolina",
+        "date": "Sunday, August 3rd, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "South Florida",
+        "date": "Thursday, August 14th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Lees-McRae",
+        "date": "Saturday, August 16th, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "Georgia State",
+        "date": "Sunday, August 17th, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Emmanuel (Ga.)",
+        "date": "Friday, August 22nd, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "Bob Jones",
+        "date": "Friday, August 22nd, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Purple vs. White Scrimmage",
+        "date": "Saturday, August 23rd, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "Charleston Southern",
+        "date": "Sunday, August 24th, 2025",
+        "time": "2:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "North Greenville",
+        "date": "Thursday, August 28th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Football",
+        "opponent": "William & Mary",
+        "date": "Saturday, August 30th, 2025",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Duke",
+        "date": "Sunday, August 31st, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Davidson",
+        "date": "Thursday, September 4th, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Football",
+        "opponent": "Presbyterian",
+        "date": "Saturday, September 6th, 2025",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Alabama State",
+        "date": "Thursday, September 11th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Debbie Southern Furman Fall Classic",
+        "date": "Friday, September 12th, 2025",
+        "time": "ALL DAY",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "North Florida",
+        "date": "Friday, September 12th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Debbie Southern Furman Fall Classic",
+        "date": "Saturday, September 13th, 2025",
+        "time": "ALL DAY",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Cross Country / Track & Field",
+        "opponent": "Furman Invitational",
+        "date": "Saturday, September 13th, 2025",
+        "time": "9 AM Women's 4 Mile - 9:45 AM Men's 6K",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Winthrop",
+        "date": "Saturday, September 13th, 2025",
+        "time": "2:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Debbie Southern Furman Fall Classic",
+        "date": "Sunday, September 14th, 2025",
+        "time": "ALL DAY",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "College of Charleston",
+        "date": "Tuesday, September 16th, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Charlotte",
+        "date": "Thursday, September 18th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "Mercer",
+        "date": "Thursday, September 18th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Golf",
+        "opponent": "Lady Paladin Invitational",
+        "date": "Friday, September 19th, 2025",
+        "time": "ALL DAY",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Women's Golf",
+        "opponent": "Lady Paladin Invitational",
+        "date": "Saturday, September 20th, 2025",
+        "time": "ALL DAY",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Women's Golf",
+        "opponent": "Lady Paladin Invitational",
+        "date": "Sunday, September 21st, 2025",
+        "time": "ALL DAY",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Charlotte",
+        "date": "Monday, September 22nd, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Samford",
+        "date": "Saturday, September 27th, 2025",
+        "time": "4:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "USC Upstate",
+        "date": "Tuesday, September 30th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Mercer",
+        "date": "Thursday, October 2nd, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "The Citadel",
+        "date": "Friday, October 3rd, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Football",
+        "opponent": "East Tennessee State",
+        "date": "Saturday, October 4th, 2025",
+        "time": "2:00 p.m.",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "Samford",
+        "date": "Sunday, October 5th, 2025",
+        "time": "2:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Presbyterian",
+        "date": "Tuesday, October 7th, 2025",
+        "time": "6:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "ETSU",
+        "date": "Friday, October 10th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "ETSU",
+        "date": "Saturday, October 11th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Chattanooga",
+        "date": "Friday, October 17th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Golf",
+        "opponent": "Furman Intercollegiate Presented by Ezelle/Hines Properties",
+        "date": "Saturday, October 18th, 2025",
+        "time": "ALL DAY",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Western Carolina",
+        "date": "Saturday, October 18th, 2025",
+        "time": "4:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Golf",
+        "opponent": "Furman Intercollegiate Presented by Ezelle/Hines Properties",
+        "date": "Sunday, October 19th, 2025",
+        "time": "ALL DAY",
+        "facility": "Furman Golf Course"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Furman Alumni Event",
+        "date": "Friday, October 24th, 2025",
+        "time": "ALL DAY",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Furman Alumni Event",
+        "date": "Saturday, October 25th, 2025",
+        "time": "ALL DAY",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Football",
+        "opponent": "The Citadel",
+        "date": "Saturday, October 25th, 2025",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "UNC Greensboro",
+        "date": "Saturday, October 25th, 2025",
+        "time": "7:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "UNC Greensboro",
+        "date": "Saturday, October 25th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Soccer",
+        "opponent": "The Citadel",
+        "date": "Sunday, October 26th, 2025",
+        "time": "2:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Alabama",
+        "date": "Sunday, October 26th, 2025",
+        "time": "3:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Winthrop",
+        "date": "Tuesday, October 28th, 2025",
+        "time": "7:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Football",
+        "opponent": "Mercer",
+        "date": "Saturday, November 1st, 2025",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "North Greenville",
+        "date": "Monday, November 3rd, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Wofford",
+        "date": "Thursday, November 6th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Troy",
+        "date": "Friday, November 7th, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "East Tennessee State",
+        "date": "Saturday, November 8th, 2025",
+        "time": "6:00 PM",
+        "facility": "Alley Gymnasium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Wofford",
+        "date": "Sunday, November 9th, 2025",
+        "time": "2:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Columbia International",
+        "date": "Monday, November 10th, 2025",
+        "time": "6:30 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Georgia State",
+        "date": "Thursday, November 13th, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Football",
+        "opponent": "VMI",
+        "date": "Saturday, November 15th, 2025",
+        "time": "1:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "UNC Greensboro",
+        "date": "Sunday, November 16th, 2025",
+        "time": "2:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Campbell",
+        "date": "Sunday, November 16th, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Ohio Christian",
+        "date": "Wednesday, November 19th, 2025",
+        "time": "6:30 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Western Michigan",
+        "date": "Sunday, November 23rd, 2025",
+        "time": "1:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Clemson",
+        "date": "Sunday, November 23rd, 2025",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Queens",
+        "date": "Sunday, November 23rd, 2025",
+        "time": "5:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "UNC Asheville",
+        "date": "Saturday, November 29th, 2025",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Soccer",
+        "opponent": "Hofstra",
+        "date": "Sunday, November 30th, 2025",
+        "time": "1:00 PM",
+        "facility": "Stone Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Presbyterian",
+        "date": "Wednesday, December 3rd, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Harvard",
+        "date": "Saturday, December 6th, 2025",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Bob Jones",
+        "date": "Tuesday, December 9th, 2025",
+        "time": "6:30 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Mars Hill",
+        "date": "Sunday, December 14th, 2025",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Charleston Southern",
+        "date": "Sunday, December 21st, 2025",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Brevard",
+        "date": "Tuesday, December 30th, 2025",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Mercer",
+        "date": "Wednesday, December 31st, 2025",
+        "time": "12:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Bob Jones",
+        "date": "Saturday, January 3rd, 2026",
+        "time": "1:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Western Carolina",
+        "date": "Saturday, January 3rd, 2026",
+        "time": "4:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "VMI",
+        "date": "Saturday, January 10th, 2026",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "UNC Greensboro",
+        "date": "Thursday, January 15th, 2026",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Iowa",
+        "date": "Saturday, January 17th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Western Carolina",
+        "date": "Saturday, January 17th, 2026",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Presbyterian",
+        "date": "Saturday, January 17th, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Wofford",
+        "date": "Saturday, January 17th, 2026",
+        "time": "5:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Austin Peay State",
+        "date": "Monday, January 19th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Wake Forest",
+        "date": "Friday, January 23rd, 2026",
+        "time": "6:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Davidson",
+        "date": "Tuesday, January 27th, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Samford",
+        "date": "Thursday, January 29th, 2026",
+        "time": "5:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "North Greenville",
+        "date": "Friday, January 30th, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "Chattanooga",
+        "date": "Sunday, February 1st, 2026",
+        "time": "1:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Chattanooga",
+        "date": "Thursday, February 5th, 2026",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "East Tennessee State",
+        "date": "Saturday, February 7th, 2026",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "UNC Greensboro",
+        "date": "Sunday, February 8th, 2026",
+        "time": "1:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Mississippi State",
+        "date": "Thursday, February 12th, 2026",
+        "time": "1:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Bowling Green",
+        "date": "Thursday, February 12th, 2026",
+        "time": "4:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Bowling Green",
+        "date": "Thursday, February 12th, 2026",
+        "time": "6:30 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Lipscomb",
+        "date": "Saturday, February 14th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Memphis",
+        "date": "Sunday, February 15th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "ETSU",
+        "date": "Wednesday, February 18th, 2026",
+        "time": "6:30 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Samford",
+        "date": "Thursday, February 19th, 2026",
+        "time": "7:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Austin Peay",
+        "date": "Friday, February 20th, 2026",
+        "time": "6:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Mercer",
+        "date": "Saturday, February 21st, 2026",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Men's Basketball",
+        "opponent": "The Citadel",
+        "date": "Wednesday, February 25th, 2026",
+        "time": "6:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "George Mason",
+        "date": "Friday, February 27th, 2026",
+        "time": "6:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Seton Hall",
+        "date": "Saturday, February 28th, 2026",
+        "time": "9:00 AM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "West Georgia",
+        "date": "Saturday, February 28th, 2026",
+        "time": "12:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Basketball",
+        "opponent": "Wofford",
+        "date": "Saturday, February 28th, 2026",
+        "time": "2:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Winthrop",
+        "date": "Sunday, March 1st, 2026",
+        "time": "12:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Campbell",
+        "date": "Monday, March 2nd, 2026",
+        "time": "6:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "St. Bonaventure",
+        "date": "Wednesday, March 4th, 2026",
+        "time": "5:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Belmont",
+        "date": "Saturday, March 7th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Virginia Tech",
+        "date": "Sunday, March 8th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Bucknell",
+        "date": "Wednesday, March 11th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Bucknell",
+        "date": "Wednesday, March 11th, 2026",
+        "time": "5:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "UMass Lowell",
+        "date": "Thursday, March 12th, 2026",
+        "time": "6:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Elon",
+        "date": "Saturday, March 14th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "Dayton",
+        "date": "Saturday, March 14th, 2026",
+        "time": "1:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Quinnipiac",
+        "date": "Sunday, March 15th, 2026",
+        "time": "12:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "USC Upstate",
+        "date": "Tuesday, March 17th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "USC Upstate",
+        "date": "Tuesday, March 17th, 2026",
+        "time": "5:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Manhattan",
+        "date": "Tuesday, March 17th, 2026",
+        "time": "6:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "Chattanooga",
+        "date": "Sunday, March 22nd, 2026",
+        "time": "12:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "The Citadel",
+        "date": "Tuesday, March 24th, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "Clemson",
+        "date": "Friday, March 27th, 2026",
+        "time": "6:30 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "East Tennessee State",
+        "date": "Saturday, March 28th, 2026",
+        "time": "1:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Radford",
+        "date": "Saturday, March 28th, 2026",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "East Tennessee State",
+        "date": "Saturday, March 28th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Samford",
+        "date": "Sunday, March 29th, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "East Tennessee State",
+        "date": "Sunday, March 29th, 2026",
+        "time": "1:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Wofford",
+        "date": "Tuesday, March 31st, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "Presbyterian",
+        "date": "Tuesday, March 31st, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Volleyball",
+        "opponent": "USC Upstate",
+        "date": "Wednesday, April 1st, 2026",
+        "time": "6:00 PM",
+        "facility": "Timmons Arena"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Wofford",
+        "date": "Wednesday, April 1st, 2026",
+        "time": "7:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "Emmanuel (Ga.)",
+        "date": "Thursday, April 2nd, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Tennis",
+        "opponent": "Chattanooga",
+        "date": "Friday, April 3rd, 2026",
+        "time": "11:00 AM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "East Tennessee State",
+        "date": "Monday, April 6th, 2026",
+        "time": "1:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Presbyterian",
+        "date": "Tuesday, April 7th, 2026",
+        "time": "4:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Presbyterian",
+        "date": "Tuesday, April 7th, 2026",
+        "time": "6:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "Mercer",
+        "date": "Wednesday, April 8th, 2026",
+        "time": "7:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Men's Tennis",
+        "opponent": "Wofford",
+        "date": "Thursday, April 9th, 2026",
+        "time": "3:00 PM",
+        "facility": "Mickel Tennis Center"
+    },
+    {
+        "sport": "Women's Lacrosse",
+        "opponent": "High Point",
+        "date": "Saturday, April 11th, 2026",
+        "time": "2:00 PM",
+        "facility": "Paladin Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Charleston Southern",
+        "date": "Tuesday, April 14th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Charleston Southern",
+        "date": "Tuesday, April 14th, 2026",
+        "time": "5:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Samford",
+        "date": "Saturday, April 18th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Samford",
+        "date": "Saturday, April 18th, 2026",
+        "time": "5:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Samford",
+        "date": "Sunday, April 19th, 2026",
+        "time": "2:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Wofford",
+        "date": "Saturday, April 25th, 2026",
+        "time": "1:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Wofford",
+        "date": "Saturday, April 25th, 2026",
+        "time": "3:00 PM",
+        "facility": "Pepsi Stadium"
+    },
+    {
+        "sport": "Softball",
+        "opponent": "Wofford",
+        "date": "Sunday, April 26th, 2026",
+        "time": "1:00 PM",
+        "facility": "Pepsi Stadium"
+    }
+]
