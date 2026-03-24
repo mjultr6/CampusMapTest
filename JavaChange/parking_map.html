@@ -15,9 +15,7 @@ html, body {
   font-family: 'DM Sans', sans-serif;
 }
 
-:root {
-  --header-height: 58px;
-}
+:root { --header-height: 58px; }
 
 #map {
   position: absolute;
@@ -26,7 +24,6 @@ html, body {
   touch-action: pan-x pan-y;
 }
 
-/* ── Header ── */
 #header {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -50,7 +47,6 @@ html, body {
   }
 }
 
-/* ── Row 1: title + CLP link ── */
 .header-row1 {
   display: flex;
   align-items: center;
@@ -58,9 +54,7 @@ html, body {
   gap: 12px;
 }
 
-@media (min-width: 640px) {
-  .header-row1 { flex-shrink: 0; }
-}
+@media (min-width: 640px) { .header-row1 { flex-shrink: 0; } }
 
 #header h1 {
   font-family: 'Playfair Display', serif;
@@ -70,9 +64,7 @@ html, body {
   white-space: nowrap;
 }
 
-@media (min-width: 640px) {
-  #header h1 { font-size: 1.15rem; }
-}
+@media (min-width: 640px) { #header h1 { font-size: 1.15rem; } }
 
 #header h1 span {
   display: block;
@@ -84,9 +76,7 @@ html, body {
   color: #888;
 }
 
-.divider {
-  display: none;
-}
+.divider { display: none; }
 
 @media (min-width: 640px) {
   .divider {
@@ -98,7 +88,6 @@ html, body {
   }
 }
 
-/* ── Pass selector wrapper ── */
 #passWrapper {
   display: flex;
   align-items: center;
@@ -116,11 +105,8 @@ html, body {
   display: none;
 }
 
-@media (min-width: 640px) {
-  #passWrapper label { display: block; }
-}
+@media (min-width: 640px) { #passWrapper label { display: block; } }
 
-/* ── Pass buttons ── */
 #passButtons {
   display: flex;
   gap: 5px;
@@ -148,11 +134,7 @@ html, body {
 }
 
 @media (min-width: 640px) {
-  .pass-btn {
-    font-size: 0.78rem;
-    padding: 5px 12px;
-    gap: 6px;
-  }
+  .pass-btn { font-size: 0.78rem; padding: 5px 12px; gap: 6px; }
 }
 
 .pass-btn:hover {
@@ -168,17 +150,13 @@ html, body {
 }
 
 .pass-btn .dot {
-  width: 9px;
-  height: 9px;
+  width: 9px; height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-@media (min-width: 640px) {
-  .pass-btn .dot { width: 10px; height: 10px; }
-}
+@media (min-width: 640px) { .pass-btn .dot { width: 10px; height: 10px; } }
 
-/* ── Nav button ── */
 #navBtn {
   padding: 6px 10px;
   background: rgba(0,0,0,0.04);
@@ -195,30 +173,18 @@ html, body {
 }
 
 @media (min-width: 640px) {
-  #navBtn {
-    margin-left: auto;
-    padding: 7px 14px;
-    font-size: 0.82rem;
-  }
+  #navBtn { margin-left: auto; padding: 7px 14px; font-size: 0.82rem; }
 }
 
-#navBtn:hover {
-  background: rgba(0,0,0,0.08);
-  border-color: #aaa;
-  color: #111;
-}
+#navBtn:hover { background: rgba(0,0,0,0.08); border-color: #aaa; color: #111; }
 
-/* ── Leaflet zoom control nudge ── */
-.leaflet-top.leaflet-left {
-  top: calc(var(--header-height) + 10px);
-}
+.leaflet-top.leaflet-left { top: calc(var(--header-height) + 10px); }
 </style>
 </head>
 
 <body>
 
 <div id="header">
-  <!-- Row 1: title + CLP nav -->
   <div class="header-row1">
     <h1>
       <span>Furman University</span>
@@ -227,7 +193,6 @@ html, body {
     <a href="../CLP API and Map/clp_map.html" id="navBtn">🗓️ CLP Map</a>
   </div>
 
-  <!-- Row 2: pass type selector -->
   <div id="passWrapper">
     <label>Pass Type</label>
     <div id="passButtons">
@@ -271,39 +236,32 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-let baseLayer = null;
-let highlightLayer = null;
-let geoData = null;
-let activeVal = null;
-
 const passNames = {
-  Green: 'South Housing (Green)',
-  Yellow: 'Clark Murphy Complex (Yellow)',
+  Green:    'South Housing (Green)',
+  Yellow:   'Clark Murphy Complex (Yellow)',
   BabyBlue: 'North Village/Bell Tower (Baby Blue)',
-  Silver: 'Silver/Senior (Silver)',
-  Orange: 'Commuter/Graduate/OLLI (Orange)',
-  Purple: 'Faculty/Staff (Purple)'
+  Silver:   'Silver/Senior (Silver)',
+  Orange:   'Commuter/Graduate/OLLI (Orange)',
+  Purple:   'Faculty/Staff (Purple)'
 };
 
 const passColors = {
-  Green: '#00cc00',
-  Yellow: '#ffcc00',
-  BabyBlue: '#00a9f9',
-  Silver: '#808080',
-  Orange: '#ff8c00',
-  Purple: '#9932cc',
-  All: '#FA9BCF'
+  Green: '#00cc00', Yellow: '#ffcc00', BabyBlue: '#00a9f9',
+  Silver: '#808080', Orange: '#ff8c00', Purple: '#9932cc', All: '#FA9BCF'
 };
 
 const passActiveBg = {
-  Green: '#00cc00',
-  Yellow: '#e6b800',
-  BabyBlue: '#00a9f9',
-  Silver: '#808080',
-  Orange: '#ff8c00',
-  Purple: '#9932cc',
-  All: '#e080b0'
+  Green: '#00cc00', Yellow: '#e6b800', BabyBlue: '#00a9f9',
+  Silver: '#808080', Orange: '#ff8c00', Purple: '#9932cc', All: '#e080b0'
 };
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let geoData = null;
+let activeVal = null;
+
+// Cache: one layer per pass type, built lazily and reused
+// { Green: L.geoJSON, Yellow: ..., All: ..., _base: ... }
+const layerCache = {};
 
 // ── Dynamic header height ─────────────────────────────────────────────────────
 function updateHeaderHeight() {
@@ -316,11 +274,11 @@ window.addEventListener('resize', updateHeaderHeight);
 
 // ── Police station mask ───────────────────────────────────────────────────────
 const policeMask = {
-  "type": "Feature",
-  "properties": { "name": "Mask" },
-  "geometry": {
-    "type": "Polygon",
-    "coordinates": [[
+  type: "Feature",
+  properties: { name: "Mask" },
+  geometry: {
+    type: "Polygon",
+    coordinates: [[
       [-82.43555, 34.92860],
       [-82.43555, 34.92838],
       [-82.43488, 34.92838],
@@ -334,78 +292,39 @@ const maskLayer = L.geoJSON(policeMask, {
   style: { color: "#FFFFE4", fillColor: "#FFFFE4", fillOpacity: 1, weight: 0 }
 });
 
-fetch('furman_parking.geojson')
-  .then(res => res.json())
-  .then(data => {
-    geoData = data;
-    baseLayer = L.geoJSON(data, {
-      style: {
-        color: "#3388ff",
-        weight: 2,
-        fillColor: "#3388ff",
-        fillOpacity: 0.2
-      },
+// ── Build or retrieve a cached layer for a pass value ─────────────────────────
+// Each layer is created once and reused on subsequent selections.
+function getOrBuildLayer(val) {
+  if (layerCache[val]) return layerCache[val];
+
+  let layer;
+
+  if (val === '_base') {
+    layer = L.geoJSON(geoData, {
+      style: { color: "#3388ff", weight: 2, fillColor: "#3388ff", fillOpacity: 0.2 },
       onEachFeature: (f, l) => {
-        let popup = '';
         const tags = f.properties.tags || {};
-        if (tags.name) popup += `Name: ${tags.name}<br>`;
+        let popup = '';
+        if (tags.name)     popup += `Name: ${tags.name}<br>`;
         if (tags.capacity) popup += `Spots: ${tags.capacity}<br>`;
         if (popup) l.bindPopup(popup);
       }
     });
-    maskLayer.addTo(map);
-    updateHeaderHeight();
-  });
 
-function selectPass(val) {
-  if (activeVal === val) {
-    activeVal = null;
-    document.querySelectorAll('.pass-btn').forEach(b => {
-      b.classList.remove('active');
-      b.style.background = '';
-      b.style.borderColor = '';
-    });
-    if (highlightLayer) { highlightLayer.remove(); highlightLayer = null; }
-    if (baseLayer) baseLayer.remove();
-    maskLayer.addTo(map);
-    return;
-  }
-
-  activeVal = val;
-
-  document.querySelectorAll('.pass-btn').forEach(b => {
-    b.classList.remove('active');
-    b.style.background = '';
-    b.style.borderColor = 'transparent';
-  });
-  const activeBtn = document.querySelector(`.pass-btn[data-val="${val}"]`);
-  if (activeBtn) {
-    activeBtn.classList.add('active');
-    activeBtn.style.background = passActiveBg[val];
-    activeBtn.style.borderColor = passActiveBg[val];
-  }
-
-  if (highlightLayer) { highlightLayer.remove(); highlightLayer = null; }
-  if (baseLayer) { baseLayer.remove(); }
-
-  if (!geoData) return;
-
-  if (val === 'All') {
-    highlightLayer = L.geoJSON(geoData, {
-      style: {
-        color: '#FA9BCF', weight: 3, opacity: 0.9,
-        fillColor: '#FA9BCF', fillOpacity: 0.35
-      },
+  } else if (val === 'All') {
+    layer = L.geoJSON(geoData, {
+      style: { color: '#FA9BCF', weight: 3, opacity: 0.9, fillColor: '#FA9BCF', fillOpacity: 0.35 },
       onEachFeature: (f, l) => {
-        const passes = f.properties.pass || [];
+        const passes  = f.properties.pass || [];
         const allowed = passes.map(p => passNames[p] || p).join(', ') || 'None';
-        const name = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
+        const name    = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
         l.bindPopup(`<strong>${name}</strong><br>${allowed}`);
       }
-    }).addTo(map);
+    });
+
   } else {
     const color = passColors[val];
-    highlightLayer = L.geoJSON(geoData, {
+    layer = L.geoJSON(geoData, {
       filter: f => {
         const passes = f.properties.pass;
         return Array.isArray(passes) ? passes.includes(val) : passes === val;
@@ -415,22 +334,83 @@ function selectPass(val) {
         const name = f.properties.tags?.name || f.properties['@id'] || 'Unnamed';
         l.bindPopup(`<strong>Allowed for:</strong> ${passNames[val]}<br><strong>Lot:</strong> ${name}`);
       }
-    }).addTo(map);
+    });
   }
 
-  if (highlightLayer && highlightLayer.getLayers().length)
-    map.fitBounds(highlightLayer.getBounds());
+  layerCache[val] = layer;
+  return layer;
+}
 
+// ── Show only the requested layer (all others hidden) ─────────────────────────
+function showLayer(val) {
+  // Hide all cached layers
+  Object.values(layerCache).forEach(l => { if (map.hasLayer(l)) l.remove(); });
+  if (map.hasLayer(maskLayer)) maskLayer.remove();
+
+  if (val) {
+    const layer = getOrBuildLayer(val);
+    layer.addTo(map);
+    if (val !== '_base' && layer.getLayers().length) {
+      map.fitBounds(layer.getBounds());
+    }
+  }
+
+  // Mask always sits on top
   maskLayer.addTo(map);
 }
+
+// ── Pass selection handler ────────────────────────────────────────────────────
+function selectPass(val) {
+  if (!geoData) return;
+
+  // Toggle off if already active
+  if (activeVal === val) {
+    activeVal = null;
+    document.querySelectorAll('.pass-btn').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.borderColor = '';
+    });
+    showLayer(null);
+    return;
+  }
+
+  activeVal = val;
+
+  // Update button styles
+  document.querySelectorAll('.pass-btn').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.borderColor = 'transparent';
+  });
+  const activeBtn = document.querySelector(`.pass-btn[data-val="${val}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.style.background  = passActiveBg[val];
+    activeBtn.style.borderColor = passActiveBg[val];
+  }
+
+  showLayer(val);
+}
+
+// ── Load data once ────────────────────────────────────────────────────────────
+fetch('furman_parking.geojson')
+  .then(res => res.json())
+  .then(data => {
+    geoData = data;
+
+    // Pre-build and show the base (no selection) layer immediately
+    showLayer(null);
+    maskLayer.addTo(map);
+    updateHeaderHeight();
+  });
 
 document.querySelectorAll('.pass-btn').forEach(btn => {
   btn.addEventListener('click', () => selectPass(btn.dataset.val));
 });
 
-map.on("click", e => console.log("Clicked:", e.latlng));
+map.on('click', e => console.log('Clicked:', e.latlng));
 
-// Initial height set after fonts/layout settle
 requestAnimationFrame(() => updateHeaderHeight());
 </script>
 

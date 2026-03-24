@@ -22,9 +22,17 @@ driver = webdriver.Chrome(
 all_events = []
 seen_event_ids = set()
 
-# ── Date range: start of last school year → end of summer CLPs ───────────────
-DATE_START = datetime(2025, 8, 1)   # Beginning of current school year (early August 2025)
-DATE_END   = datetime(2026, 7, 31)  # End of summer CLPs (end of July 2026)
+# ── Dynamic academic year date range ─────────────────────────────────────────
+# Academic year runs August → July.
+# If today is August or later, the current school year started this August.
+# If today is before August (Jan–Jul), the school year started last August.
+_today = datetime.today()
+_academic_year_start = _today.year if _today.month >= 8 else _today.year - 1
+
+DATE_START = datetime(_academic_year_start,     8, 1)   # Aug 1 of start year
+DATE_END   = datetime(_academic_year_start + 1, 7, 31)  # Jul 31 of following year
+
+# ─────────────────────────────────────────────────────────────────────────────
 
 def parse_event_date(date_str):
     """Parse 'Month D, YYYY' into a datetime object. Returns None if unparseable."""
@@ -154,6 +162,7 @@ def click_previous():
 # ── STEP 1: Load the page ─────────────────────────────────────────────────────
 
 print("Loading Furman CLP calendar...")
+print(f"Academic year: {_academic_year_start}–{_academic_year_start + 1}")
 print(f"Date range: {DATE_START.strftime('%B %d, %Y')} → {DATE_END.strftime('%B %d, %Y')}")
 driver.get("https://www.furman.edu/academics/cultural-life-program/upcoming-clp-events/")
 time.sleep(8)
@@ -162,8 +171,8 @@ time.sleep(8)
 all_events.extend(scrape_current_view())
 
 # ── STEP 2: Click back until we pass DATE_START ───────────────────────────────
-# Max weeks to go back: ~120 weeks covers Aug 2024 from mid-2026
-MAX_WEEKS_BACK = 120
+# Max weeks back: covers a full academic year (52 weeks) plus a buffer
+MAX_WEEKS_BACK = 60
 stopped_early = False
 
 for i in range(MAX_WEEKS_BACK):
@@ -175,13 +184,10 @@ for i in range(MAX_WEEKS_BACK):
 
     new_events = scrape_current_view()
 
-    # Check if we've gone past DATE_START — if all events on this page are
-    # before DATE_START, stop scraping backwards
     if new_events:
         all_events.extend(new_events)
     else:
-        # No new in-range events on this page — check if we're past the start date
-        # by checking the page header date
+        # No new in-range events — check if we've scrolled past DATE_START
         try:
             calendar_iframe = driver.find_element(
                 By.XPATH, "//iframe[contains(@title, 'Classic Multi-Week Calendar')]"
@@ -192,14 +198,14 @@ for i in range(MAX_WEEKS_BACK):
             page_period = header.text.strip() if header else ""
             driver.switch_to.default_content()
 
-            # Try to parse a year from the header — if it's before 2024, stop
+            # Stop if the page year is before the academic year start year
             year_match = re.search(r'20\d{2}', page_period)
-            if year_match and int(year_match.group()) < 2024:
+            if year_match and int(year_match.group()) < _academic_year_start:
                 print(f"  ⛔ Reached {page_period}, before date range. Stopping.")
                 stopped_early = True
                 break
         except:
-            driver.switch_to.default_content()
+            driver.switch_to.default_context()
 
     if stopped_early:
         break
@@ -243,7 +249,6 @@ locations = sorted(set(e["location"] for e in all_events if e["location"]))
 for loc in locations:
     print(f"  📍 {loc}")
 
-# Extract unique building names (first part before room number)
 print("\n\n========== UNIQUE BUILDINGS ==========")
 buildings = set()
 for loc in locations:
@@ -256,4 +261,5 @@ for b in sorted(buildings):
 print(f"\n✅ {len(all_events)} events saved to clp_all_events.json")
 print(f"✅ {len(locations)} unique locations found")
 print(f"✅ {len(buildings)} unique buildings found")
+print(f"✅ Academic year: {_academic_year_start}–{_academic_year_start + 1}")
 print(f"✅ Date range: {DATE_START.strftime('%B %d, %Y')} → {DATE_END.strftime('%B %d, %Y')}")

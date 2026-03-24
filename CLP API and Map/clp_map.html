@@ -30,7 +30,6 @@
     overflow: hidden;
   }
 
-  /* ── Header ── */
   #header {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -44,7 +43,6 @@
     gap: 8px;
   }
 
-  /* Desktop: single row */
   @media (min-width: 600px) {
     #header {
       flex-direction: row;
@@ -54,7 +52,6 @@
     }
   }
 
-  /* ── Row 1: title + parking ── */
   .header-row1 {
     display: flex;
     align-items: center;
@@ -62,11 +59,7 @@
     gap: 12px;
   }
 
-  @media (min-width: 600px) {
-    .header-row1 {
-      flex-shrink: 0;
-    }
-  }
+  @media (min-width: 600px) { .header-row1 { flex-shrink: 0; } }
 
   #header h1 {
     font-family: 'Playfair Display', serif;
@@ -77,9 +70,7 @@
     white-space: nowrap;
   }
 
-  @media (min-width: 600px) {
-    #header h1 { font-size: 1.25rem; }
-  }
+  @media (min-width: 600px) { #header h1 { font-size: 1.25rem; } }
 
   #header h1 span {
     color: var(--grey);
@@ -90,9 +81,7 @@
     text-transform: uppercase;
   }
 
-  .divider {
-    display: none;
-  }
+  .divider { display: none; }
 
   @media (min-width: 600px) {
     .divider {
@@ -104,7 +93,6 @@
     }
   }
 
-  /* ── Row 2: date selector + event count ── */
   .header-row2 {
     display: flex;
     align-items: center;
@@ -130,9 +118,7 @@
     display: none;
   }
 
-  @media (min-width: 600px) {
-    #dateWrapper label { display: block; }
-  }
+  @media (min-width: 600px) { #dateWrapper label { display: block; } }
 
   #calBtn {
     display: flex;
@@ -166,7 +152,6 @@
   #calBtn .cal-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #calBtn .cal-arrow { font-size: 0.65rem; color: var(--purple); margin-left: 4px; flex-shrink: 0; }
 
-  /* ── Calendar popup ── */
   #calPopup {
     display: none;
     position: absolute;
@@ -262,9 +247,7 @@
     touch-action: manipulation;
   }
 
-  @media (min-width: 600px) {
-    .cal-day { padding: 6px 2px; }
-  }
+  @media (min-width: 600px) { .cal-day { padding: 6px 2px; } }
 
   .cal-day.has-events {
     color: var(--text-light);
@@ -291,10 +274,8 @@
   }
 
   .cal-day.selected::after { background: var(--bg-dark) !important; }
-
   .cal-day.empty { cursor: default; }
 
-  /* ── Event count badge ── */
   #eventCount {
     font-size: 0.72rem;
     color: var(--grey);
@@ -316,14 +297,9 @@
     }
   }
 
-  #eventCount strong {
-    color: var(--purple);
-    font-size: 0.9rem;
-  }
-
+  #eventCount strong { color: var(--purple); font-size: 0.9rem; }
   #eventCount:empty { display: none; }
 
-  /* ── Nav button ── */
   #navBtn {
     padding: 6px 10px;
     background: rgba(130,90,200,0.12);
@@ -353,19 +329,14 @@
     color: white;
   }
 
-  /* ── Zoom control ── */
-  .leaflet-top.leaflet-left {
-    top: calc(var(--header-height) + 10px);
-  }
+  .leaflet-top.leaflet-left { top: calc(var(--header-height) + 10px); }
 
-  /* ── Map ── */
   #map {
     position: absolute;
     top: var(--header-height);
     bottom: 0; left: 0; right: 0;
   }
 
-  /* ── Leaflet popup overrides ── */
   .leaflet-popup-content-wrapper {
     background: rgba(15,13,20,0.97) !important;
     border: 1px solid rgba(130,90,200,0.4) !important;
@@ -378,19 +349,11 @@
   }
 
   @media (min-width: 600px) {
-    .leaflet-popup-content-wrapper {
-      max-width: 320px !important;
-    }
+    .leaflet-popup-content-wrapper { max-width: 320px !important; }
   }
 
-  .leaflet-popup-content {
-    margin: 0 !important;
-    width: auto !important;
-  }
-
-  .leaflet-popup-tip {
-    background: rgba(15,13,20,0.97) !important;
-  }
+  .leaflet-popup-content { margin: 0 !important; width: auto !important; }
+  .leaflet-popup-tip { background: rgba(15,13,20,0.97) !important; }
 
   .leaflet-popup-close-button {
     color: var(--grey) !important;
@@ -400,14 +363,9 @@
     right: 4px !important;
   }
 
-  .leaflet-popup-close-button:hover {
-    color: var(--purple) !important;
-  }
+  .leaflet-popup-close-button:hover { color: var(--purple) !important; }
 
-  /* ── Popup content ── */
-  .popup-inner {
-    padding: 14px 16px;
-  }
+  .popup-inner { padding: 14px 16px; }
 
   .popup-building {
     font-family: 'Playfair Display', serif;
@@ -424,10 +382,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  .popup-event:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
+  .popup-event:last-child { border-bottom: none; padding-bottom: 0; }
 
   .popup-event-title {
     font-size: 0.86rem;
@@ -444,17 +399,8 @@
     flex-wrap: wrap;
   }
 
-  .popup-time {
-    font-size: 0.75rem;
-    color: var(--purple);
-    font-weight: 500;
-  }
-
-  .popup-room {
-    font-size: 0.72rem;
-    color: var(--grey);
-    font-style: italic;
-  }
+  .popup-time { font-size: 0.75rem; color: var(--purple); font-weight: 500; }
+  .popup-room { font-size: 0.72rem; color: var(--grey); font-style: italic; }
 
   .popup-no-events {
     font-size: 0.82rem;
@@ -463,7 +409,6 @@
     padding: 4px 0;
   }
 
-  /* ── Legend ── */
   #legend {
     position: absolute;
     bottom: 24px;
@@ -479,10 +424,7 @@
   }
 
   @media (min-width: 600px) {
-    #legend {
-      font-size: 0.72rem;
-      padding: 10px 14px;
-    }
+    #legend { font-size: 0.72rem; padding: 10px 14px; }
   }
 
   #legend div {
@@ -500,11 +442,8 @@
     flex-shrink: 0;
   }
 
-  @media (min-width: 600px) {
-    .legend-swatch { width: 14px; height: 14px; }
-  }
+  @media (min-width: 600px) { .legend-swatch { width: 14px; height: 14px; } }
 
-  /* ── No date selected overlay ── */
   #noDateMsg {
     position: absolute;
     top: 50%; left: 50%;
@@ -522,9 +461,7 @@
     margin-bottom: 6px;
   }
 
-  @media (min-width: 600px) {
-    #noDateMsg .big { font-size: 1.4rem; }
-  }
+  @media (min-width: 600px) { #noDateMsg .big { font-size: 1.4rem; } }
 
   #noDateMsg .small {
     font-size: 0.78rem;
@@ -533,7 +470,6 @@
     letter-spacing: 0.1em;
   }
 
-  /* ── Mobile bottom sheet popup (replaces map popup on small screens) ── */
   #bottomSheet {
     display: none;
     position: absolute;
@@ -550,10 +486,7 @@
     transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
   }
 
-  #bottomSheet.open {
-    display: block;
-    transform: translateY(0);
-  }
+  #bottomSheet.open { display: block; transform: translateY(0); }
 
   .sheet-handle {
     width: 36px; height: 4px;
@@ -576,19 +509,14 @@
 
   .sheet-close:hover { color: var(--purple); }
 
-  .sheet-inner {
-    padding: 4px 16px 20px;
-  }
+  .sheet-inner { padding: 4px 16px 20px; }
 
-  @media (min-width: 600px) {
-    #bottomSheet { display: none !important; }
-  }
+  @media (min-width: 600px) { #bottomSheet { display: none !important; } }
 </style>
 </head>
 <body>
 
 <div id="header">
-  <!-- Row 1: title + parking (always visible) -->
   <div class="header-row1">
     <h1>
       <span>Furman University</span>
@@ -597,7 +525,6 @@
     <a href="../JavaChange/parking_map.html" id="navBtn">🅿️ Parking</a>
   </div>
 
-  <!-- Row 2: date selector + event count -->
   <div class="header-row2">
     <div class="divider"></div>
     <div id="dateWrapper">
@@ -612,7 +539,6 @@
   </div>
 </div>
 
-<!-- Calendar popup -->
 <div id="calPopup">
   <div class="cal-nav">
     <button id="prevMonth">&#8592;</button>
@@ -624,7 +550,6 @@
 
 <div id="map"></div>
 
-<!-- Mobile bottom sheet (shown instead of Leaflet popup on small screens) -->
 <div id="bottomSheet">
   <div class="sheet-handle"></div>
   <button class="sheet-close" id="sheetClose">&#10005;</button>
@@ -648,13 +573,20 @@
 
 <script>
 // ── State ─────────────────────────────────────────────────────────────────────
-let BUILDINGS = null;
 let clpEvents = [];
 let eventDatesSet = new Set();
+
+// Cache: index events by date for O(1) lookup
+let eventsByDate = {};
+
+// Cache: the single GeoJSON layer — built ONCE, never destroyed
+let cachedLayer = null;
+
+// Cache: feature layers keyed by building id for fast style/popup updates
+let featureLayerMap = {};
+
 let calViewDate = new Date(2026, new Date().getMonth(), 1);
 let selectedDate = '';
-let baseLayer = null;
-let eventLayer = null;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -668,11 +600,13 @@ const styleActive = {
   color: '#9B6FD4', weight: 2.5,
   fillColor: '#9B6FD4', fillOpacity: 0.35
 };
+const styleHover = {
+  color: '#C9A8F0', weight: 3,
+  fillColor: '#9B6FD4', fillOpacity: 0.6
+};
 
 // ── Responsive helpers ────────────────────────────────────────────────────────
-function isMobile() {
-  return window.innerWidth < 600;
-}
+function isMobile() { return window.innerWidth < 600; }
 
 function updateHeaderHeight() {
   const h = document.getElementById('header').offsetHeight;
@@ -697,40 +631,29 @@ const ROOM_TO_BUILDING = {
   "Amphitheater": "Amphitheater",
   "Amphitheater, Furman Lake Amphitheater Parking Lot": "Amphitheater",
   "Furman Lake Amphitheater Parking Lot": "Amphitheater",
-
   "Chapel Main Sanctuary": "Daniel Chapel",
   "Chapel Bryan Garden Room": "Daniel Chapel",
   "Chapel Bryan Garden Room,Chapel Bryan Garden Room": "Daniel Chapel",
-
   "Daniel Recital Hall": "Daniel Music Building",
-
   "Furman Hall 214 - McEachern Lecture Hall": "Furman Hall",
-
   "Johns Hall 101": "Johns Hall",
   "Johns Hall 109": "Johns Hall",
-
   "McAlister Auditorium": "McAlister Auditorium",
-
   "Patrick Lecture Hall": "Plyler Hall",
-
   "Roe Art Building Gallery": "Roe Art Building",
   "Roe Art Building Littlejohn Lecture Room": "Roe Art Building",
-
   "Playhouse": "Playhouse",
-
   "Trone Student Center Burgiss Theater": "Trone Student Center",
   "Trone Student Center Watkins Room": "Trone Student Center",
   "Trone Student Center Watkins Room Center Section": "Trone Student Center",
   "Trone Student Center Watkins Room Lobby": "Trone Student Center",
   "Trone Student Center Point of View Fire Pit": "Trone Student Center",
-
   "Younts Conference Center Great Hall": "Younts Conference Center",
   "Younts Conference Center Shaw Hall": "Younts Conference Center",
   "Younts Conference Center Birmingham Room 110A": "Younts Conference Center",
   "Younts Conference Center Atlanta Room 120B": "Younts Conference Center",
   "Younts Conference Center Atlanta Room 120A": "Younts Conference Center",
   "Younts Conference Center Birmingham Room": "Younts Conference Center",
-
   "Hartness Pavilion": "Hartness and Trustees",
   "Trustees Dining Room": "Hartness and Trustees",
 };
@@ -748,6 +671,17 @@ function getBuildingForLocation(loc) {
     if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return bid;
   }
   return null;
+}
+
+// ── Index events by date (called once on load) ────────────────────────────────
+function indexEventsByDate(events) {
+  const idx = {};
+  events.forEach(ev => {
+    const d = ev.date ? ev.date.trim() : '';
+    if (!idx[d]) idx[d] = [];
+    idx[d].push(ev);
+  });
+  return idx;
 }
 
 // ── Build popup HTML ──────────────────────────────────────────────────────────
@@ -789,7 +723,6 @@ function closeBottomSheet() {
 
 document.getElementById('sheetClose').addEventListener('click', closeBottomSheet);
 
-// Swipe-down to close
 let touchStartY = 0;
 document.getElementById('bottomSheet').addEventListener('touchstart', e => {
   touchStartY = e.touches[0].clientY;
@@ -799,27 +732,52 @@ document.getElementById('bottomSheet').addEventListener('touchend', e => {
   if (delta > 60) closeBottomSheet();
 }, { passive: true });
 
-// ── Map rendering ─────────────────────────────────────────────────────────────
-function renderMap(date) {
-  if (!BUILDINGS) return;
-  if (baseLayer) { baseLayer.remove(); baseLayer = null; }
-  if (eventLayer) { eventLayer.remove(); eventLayer = null; }
+// ── Build the GeoJSON layer ONCE ──────────────────────────────────────────────
+// This is the key change: we create the layer a single time and cache it.
+// On date changes we only call setStyle() and bindPopup() — no layer removal/re-add.
+function buildCachedLayer(buildings) {
+  cachedLayer = L.geoJSON(buildings, {
+    style: styleBase,
+    filter: f => f.geometry.type === 'Polygon' || f.geometry.type === 'LineString',
+    onEachFeature: (f, layer) => {
+      // Store reference keyed by building id for fast lookup later
+      featureLayerMap[f.id] = { layer, feature: f };
 
+      // Hover only on non-mobile; will be re-evaluated on date change
+      layer.on('mouseover', function() {
+        if (this._hasEvents) this.setStyle(styleHover);
+      });
+      layer.on('mouseout', function() {
+        if (this._hasEvents) this.setStyle(styleActive);
+      });
+    }
+  }).addTo(map);
+}
+
+// ── Update layer styles and popups for a given date ───────────────────────────
+// Called on every date change. Does NOT recreate the layer.
+function updateLayerForDate(date) {
   const noMsg = document.getElementById('noDateMsg');
 
   if (!date) {
     noMsg.style.display = 'block';
     document.getElementById('eventCount').innerHTML = '';
-    baseLayer = L.geoJSON(BUILDINGS, {
-      style: styleBase,
-      filter: f => f.geometry.type === 'Polygon'
-    }).addTo(map);
+    // Reset all features to base style
+    Object.values(featureLayerMap).forEach(({ layer }) => {
+      layer._hasEvents = false;
+      layer.setStyle(styleBase);
+      layer.unbindPopup();
+      layer.off('click');
+    });
     return;
   }
 
   noMsg.style.display = 'none';
 
-  const dayEvents = clpEvents.filter(e => e.date === date);
+  // O(1) date lookup using pre-built index
+  const dayEvents = eventsByDate[date] || [];
+
+  // Build building → events map for this date
   const buildingEvents = {};
   dayEvents.forEach(ev => {
     const bid = getBuildingForLocation(ev.location);
@@ -834,26 +792,27 @@ function renderMap(date) {
     '<strong>' + dayEvents.length + '</strong> event' + (dayEvents.length !== 1 ? 's' : '') +
     ' &bull; <strong>' + activeCount + '</strong> location' + (activeCount !== 1 ? 's' : '');
 
-  baseLayer = L.geoJSON(BUILDINGS, {
-    style: f => buildingEvents[f.id] ? styleActive : styleBase,
-    filter: f => f.geometry.type === 'Polygon' || f.geometry.type === 'LineString',
-    onEachFeature: (f, layer) => {
-      const evs = buildingEvents[f.id];
-      const name = f.properties.name || f.id;
-      const html = buildPopupHTML(name, evs || null);
+  // Update each cached feature layer in-place
+  Object.values(featureLayerMap).forEach(({ layer, feature }) => {
+    const evs = buildingEvents[feature.id];
+    const name = feature.properties.name || feature.id;
+    const hasEvents = !!(evs && evs.length);
 
-      if (isMobile()) {
-        layer.on('click', () => openBottomSheet(html));
-      } else {
-        layer.bindPopup(html, { maxWidth: 320 });
-      }
+    layer._hasEvents = hasEvents;
+    layer.setStyle(hasEvents ? styleActive : styleBase);
 
-      if (evs && evs.length) {
-        layer.on('mouseover', () => layer.setStyle({ fillOpacity: 0.6, weight: 3, color: '#C9A8F0' }));
-        layer.on('mouseout', () => layer.setStyle(styleActive));
-      }
+    const html = buildPopupHTML(name, evs || null);
+
+    // Remove existing click handler before rebinding
+    layer.off('click');
+
+    if (isMobile()) {
+      layer.unbindPopup();
+      layer.on('click', () => openBottomSheet(html));
+    } else {
+      layer.bindPopup(html, { maxWidth: 320 });
     }
-  }).addTo(map);
+  });
 }
 
 // ── Calendar ──────────────────────────────────────────────────────────────────
@@ -901,20 +860,18 @@ function selectDate(dateStr) {
   document.getElementById('calBtnText').textContent = dateStr;
   document.getElementById('calPopup').classList.remove('open');
   renderCalendar();
-  setTimeout(() => renderMap(dateStr), 50);
+  updateLayerForDate(dateStr);
 }
 
 // ── Calendar event listeners ──────────────────────────────────────────────────
 document.getElementById('calBtn').addEventListener('click', function(e) {
   e.stopPropagation();
   const popup = document.getElementById('calPopup');
-  const isOpen = popup.classList.contains('open');
-  if (isOpen) {
+  if (popup.classList.contains('open')) {
     popup.classList.remove('open');
   } else {
     popup.classList.add('open');
     renderCalendar();
-    // Recalculate popup position after header height known
     updateCalPopupTop();
   }
 });
@@ -942,16 +899,17 @@ document.addEventListener('click', function(e) {
 // ── Calendar popup top offset ─────────────────────────────────────────────────
 function updateCalPopupTop() {
   const h = document.getElementById('header').offsetHeight;
+  const popup = document.getElementById('calPopup');
   if (isMobile()) {
-    document.getElementById('calPopup').style.top = (h + 4) + 'px';
-    document.getElementById('calPopup').style.transform = 'none';
-    document.getElementById('calPopup').style.left = '8px';
-    document.getElementById('calPopup').style.right = '8px';
+    popup.style.top = (h + 4) + 'px';
+    popup.style.transform = 'none';
+    popup.style.left = '8px';
+    popup.style.right = '8px';
   } else {
-    document.getElementById('calPopup').style.top = h + 'px';
-    document.getElementById('calPopup').style.transform = 'translateX(-50%)';
-    document.getElementById('calPopup').style.left = '50%';
-    document.getElementById('calPopup').style.right = 'auto';
+    popup.style.top = h + 'px';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.left = '50%';
+    popup.style.right = 'auto';
   }
 }
 
@@ -959,8 +917,8 @@ function updateCalPopupTop() {
 window.addEventListener('resize', () => {
   updateHeaderHeight();
   updateCalPopupTop();
-  // Re-render map to rebind click vs popup correctly
-  if (selectedDate) renderMap(selectedDate);
+  // Re-bind click vs popup correctly for new viewport size (no layer rebuild needed)
+  if (selectedDate) updateLayerForDate(selectedDate);
 });
 
 // ── Load data & initialize ────────────────────────────────────────────────────
@@ -968,20 +926,23 @@ Promise.all([
   fetch('furman_buildings.geojson').then(r => r.json()),
   fetch('clp_all_events.json').then(r => r.json()).catch(() => [])
 ]).then(([buildings, events]) => {
-  BUILDINGS = buildings;
   clpEvents = events;
-  eventDatesSet = new Set(clpEvents.map(e => e.date.trim()));
+  eventsByDate = indexEventsByDate(events);
+  eventDatesSet = new Set(Object.keys(eventsByDate));
 
   updateHeaderHeight();
   updateCalPopupTop();
-  renderMap('');
+
+  // Build the layer once — it persists across all date changes and zoom/pan
+  buildCachedLayer(buildings);
+
+  // Show no-date state
+  updateLayerForDate('');
 }).catch(err => {
   console.warn('Error loading data:', err);
   updateHeaderHeight();
-  renderMap('');
 });
 
-// Initial height calculation (before data loads)
 updateHeaderHeight();
 updateCalPopupTop();
 </script>
