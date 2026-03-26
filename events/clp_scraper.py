@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import json
 import time
 import re
+import os
 from datetime import datetime
 
 options = webdriver.ChromeOptions()
@@ -23,14 +24,16 @@ all_events = []
 seen_event_ids = set()
 
 # ── Dynamic academic year date range ─────────────────────────────────────────
-# Academic year runs August → July.
-# If today is August or later, the current school year started this August.
-# If today is before August (Jan–Jul), the school year started last August.
 _today = datetime.today()
 _academic_year_start = _today.year if _today.month >= 8 else _today.year - 1
 
-DATE_START = datetime(_academic_year_start,     8, 1)   # Aug 1 of start year
-DATE_END   = datetime(_academic_year_start + 1, 7, 31)  # Jul 31 of following year
+DATE_START = datetime(_academic_year_start,     8, 1)
+DATE_END   = datetime(_academic_year_start + 1, 7, 31)
+
+DATE_PATTERN = re.compile(
+    r'(January|February|March|April|May|June|July|August|September|October|November|December)'
+    r'\s+\d{1,2},\s+\d{4}'
+)
 
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -69,6 +72,58 @@ def close_popup():
         pass
 
 
+def extract_date_str(div):
+    """
+    Try to extract a 'Month D, YYYY' date string from an event div.
+    Checks checkbox aria-label first, then falls back to twEDStartEndRange span.
+    Returns empty string if neither works — detail page will try later.
+    """
+    # Primary: checkbox aria-label
+    checkbox = div.find("input", {"type": "checkbox"})
+    if checkbox:
+        aria = checkbox.get("aria-label", "")
+        match = DATE_PATTERN.search(aria)
+        if match:
+            return match.group(0)
+
+    # Fallback: twEDStartEndRange span
+    span = div.find("span", class_="twEDStartEndRange")
+    if span:
+        match = DATE_PATTERN.search(span.text)
+        if match:
+            return match.group(0)
+
+    return ""
+
+
+def extract_date_from_detail(soup):
+    """
+    Extract a date from an event detail page.
+    Tries og:description, datetime attributes, then a broad page text sweep.
+    For multi-day events this will return the first (start) date found.
+    """
+    # og:description usually contains "Month D, YYYY, H:MMam Location"
+    og_desc = soup.find("meta", property="og:description")
+    if og_desc:
+        match = DATE_PATTERN.search(og_desc.get("content", ""))
+        if match:
+            return match.group(0)
+
+    # datetime attributes on <time> or similar tags
+    for tag in soup.find_all(True, {"datetime": True}):
+        match = DATE_PATTERN.search(tag.get("datetime", ""))
+        if match:
+            return match.group(0)
+
+    # Broad sweep of all visible page text
+    full_text = soup.get_text(" ", strip=True)
+    match = DATE_PATTERN.search(full_text)
+    if match:
+        return match.group(0)
+
+    return ""
+
+
 def scrape_current_view():
     """Scrape all events from the current calendar view."""
     try:
@@ -97,20 +152,12 @@ def scrape_current_view():
                 continue
             title = anchor.text.strip()
 
-            checkbox = div.find("input", {"type": "checkbox"})
-            date_str = ""
-            if checkbox:
-                aria = checkbox.get("aria-label", "")
-                match = re.search(
-                    r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}',
-                    aria
-                )
-                date_str = match.group(0) if match else ""
+            date_str = extract_date_str(div)
 
-            # ── Skip events outside our date range ───────────────────────────
+            # Skip out-of-range only when we actually have a date
             if date_str and not in_range(date_str):
                 print(f"  ⏭  Skipping (out of range): {date_str} — {title}")
-                seen_event_ids.add(url_event_id)  # still mark as seen
+                seen_event_ids.add(url_event_id)
                 continue
 
             detail_url = f"https://25livepub.collegenet.com/calendars/clp?trumbaEmbed=view%3Devent%26eventid%3D{url_event_id}"
@@ -124,7 +171,7 @@ def scrape_current_view():
                 "detail_url": detail_url,
                 "location": ""
             })
-            print(f"  + {date_str} {time_str} — {title}")
+            print(f"  + {date_str or '(no date)'} {time_str} — {title}")
 
         driver.switch_to.default_content()
         return events
@@ -167,11 +214,10 @@ print(f"Date range: {DATE_START.strftime('%B %d, %Y')} → {DATE_END.strftime('%
 driver.get("https://www.furman.edu/academics/cultural-life-program/upcoming-clp-events/")
 time.sleep(8)
 
-# Scrape current view first
 all_events.extend(scrape_current_view())
 
 # ── STEP 2: Click back until we pass DATE_START ───────────────────────────────
-# Max weeks back: covers a full academic year (52 weeks) plus a buffer
+
 MAX_WEEKS_BACK = 60
 stopped_early = False
 
@@ -187,7 +233,6 @@ for i in range(MAX_WEEKS_BACK):
     if new_events:
         all_events.extend(new_events)
     else:
-        # No new in-range events — check if we've scrolled past DATE_START
         try:
             calendar_iframe = driver.find_element(
                 By.XPATH, "//iframe[contains(@title, 'Classic Multi-Week Calendar')]"
@@ -198,22 +243,21 @@ for i in range(MAX_WEEKS_BACK):
             page_period = header.text.strip() if header else ""
             driver.switch_to.default_content()
 
-            # Stop if the page year is before the academic year start year
             year_match = re.search(r'20\d{2}', page_period)
             if year_match and int(year_match.group()) < _academic_year_start:
                 print(f"  ⛔ Reached {page_period}, before date range. Stopping.")
                 stopped_early = True
                 break
         except:
-            driver.switch_to.default_context()
+            driver.switch_to.default_content()
 
     if stopped_early:
         break
 
 print(f"\n\nFound {len(all_events)} unique events in range total.")
-print("Now fetching locations from detail pages...\n")
+print("Now fetching locations (and missing dates) from detail pages...\n")
 
-# ── STEP 3: Fetch location for each event ─────────────────────────────────────
+# ── STEP 3: Fetch location and fill missing dates from detail pages ────────────
 
 for i, event in enumerate(all_events):
     try:
@@ -222,6 +266,16 @@ for i, event in enumerate(all_events):
 
         soup = BeautifulSoup(driver.page_source, "html.parser")
 
+        # Fill missing date from detail page
+        if not event["date"]:
+            date_from_detail = extract_date_from_detail(soup)
+            if date_from_detail:
+                event["date"] = date_from_detail
+                print(f"  📅 Date recovered: {date_from_detail} — {event['title'][:50]}")
+            else:
+                print(f"  ⚠️  Could not recover date for: {event['title'][:50]}")
+
+        # Extract location from og:description
         og_desc = soup.find("meta", property="og:description")
         if og_desc:
             content = og_desc.get("content", "")
@@ -237,11 +291,20 @@ for i, event in enumerate(all_events):
     except Exception as e:
         print(f"  ⚠️ Error: {e}")
 
+# Report any events that still have no date
+no_date = [e for e in all_events if not e["date"]]
+if no_date:
+    print(f"\n⚠️  {len(no_date)} events still have no date after detail fetch:")
+    for e in no_date:
+        print(f"    - {e['title']} ({e['detail_url']})")
+
 driver.quit()
 
 # ── STEP 4: Save and print unique locations ───────────────────────────────────
 
-with open("clp_all_events.json", "w") as f:
+os.makedirs("events", exist_ok=True)
+
+with open("events/clp_all_events.json", "w") as f:
     json.dump(all_events, f, indent=2)
 
 print("\n\n========== ALL UNIQUE LOCATIONS ==========")
@@ -258,7 +321,7 @@ for loc in locations:
 for b in sorted(buildings):
     print(f"  🏛️  {b}")
 
-print(f"\n✅ {len(all_events)} events saved to clp_all_events.json")
+print(f"\n✅ {len(all_events)} events saved to events/clp_all_events.json")
 print(f"✅ {len(locations)} unique locations found")
 print(f"✅ {len(buildings)} unique buildings found")
 print(f"✅ Academic year: {_academic_year_start}–{_academic_year_start + 1}")

@@ -173,7 +173,7 @@ try:
         current_pointer += timedelta(days=7)
 
     # --- 5. SAVE ---
-    output_file = "furman_home_map_data.json"
+    output_file = "events/furman_home_map_data.json"
     with open(output_file, "w") as f:
         json.dump(home_games_only, f, indent=4)
 
