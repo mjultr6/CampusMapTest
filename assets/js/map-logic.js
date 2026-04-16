@@ -285,8 +285,19 @@ function setMode(mode) {
   } else {
     pCtrl.classList.add('hidden'); bCtrl.classList.remove('hidden');
     Object.values(parkingLayerCache).forEach(l => l.remove());
+    
     if (buildingData && !buildingLayer) {
-        buildingLayer = L.geoJSON(buildingData, { style: { color: '#5b21b6', weight: 1.5, opacity: 0.7, fillColor: '#ddd6fe', fillOpacity: 0.35 } });
+        buildingLayer = L.geoJSON(buildingData, { 
+          style: { color: '#5b21b6', weight: 1.5, opacity: 0.7, fillColor: '#ddd6fe', fillOpacity: 0.35 },
+          onEachFeature: (feature, layer) => {
+            layer.on('click', (e) => {
+              L.DomEvent.stopPropagation(e);
+              const name = feature.properties.name || feature.properties['@id'];
+              const entry = buildingIndex.find(ent => ent.name === name);
+              if (entry) flyToBuilding(entry);
+            });
+          }
+        });
     }
     buildingLayer.addTo(map);
   }
@@ -294,12 +305,13 @@ function setMode(mode) {
 
 document.querySelectorAll('.mode-tab').forEach(tab => tab.addEventListener('click', () => setMode(tab.dataset.mode)));
 
+// Use the variables defined in parking_map.html to fetch data
 Promise.all([
-  fetch('furman_parking.geojson').then(r => r.json()),
-  fetch('furman_buildings.geojson').then(r => r.json())
+  fetch(typeof PARKING_DATA_URL !== 'undefined' ? PARKING_DATA_URL : 'furman_parking.geojson').then(r => r.json()),
+  fetch(typeof BUILDING_DATA_URL !== 'undefined' ? BUILDING_DATA_URL : 'furman_buildings.geojson').then(r => r.json())
 ]).then(([parking, buildings]) => {
   parkingData = parking; buildingData = buildings;
   buildSearchIndex(buildings); showParkingLayer(null); maskLayer.addTo(map);
-});
+}).catch(err => console.error("Map loading error:", err));
 
 document.querySelectorAll('.pass-btn').forEach(btn => btn.addEventListener('click', () => selectPass(btn.dataset.val)));
