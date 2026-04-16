@@ -1,0 +1,157 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; font-family: 'DM Sans', sans-serif; }
+
+:root { --header-height: 58px; }
+
+#map {
+  position: absolute;
+  top: var(--header-height);
+  bottom: 0; left: 0; right: 0;
+  touch-action: pan-x pan-y;
+}
+
+/* ── Header ──────────────────────────────────────── */
+#header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #e0e0e0;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+}
+
+@media (min-width: 760px) {
+  #header { flex-direction: row; align-items: center; gap: 16px; padding: 9px 20px; }
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+#header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+#header h1 span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.67rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+}
+
+/* ── Mode Switcher ── */
+#modeTabs {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  border-radius: 22px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.mode-tab {
+  padding: 5px 13px;
+  border-radius: 18px;
+  border: none;
+  background: transparent;
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.mode-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+
+/* ── Parking Controls ── */
+#parkingControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#parkingControls::-webkit-scrollbar { display: none; }
+#passButtons { display: flex; gap: 5px; }
+
+.pass-btn {
+  display: flex; align-items: center; gap: 5px; padding: 5px 10px;
+  border-radius: 20px; border: 2px solid transparent; background: #f5f5f5;
+  font-size: 0.73rem; font-weight: 500; cursor: pointer; transition: all 0.15s ease;
+  color: #333; white-space: nowrap;
+}
+.pass-btn:hover { background: #ececec; transform: translateY(-1px); }
+.pass-btn.active { color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: translateY(-1px); }
+.pass-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Building Search ── */
+#buildingControls { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+#buildingSearchWrap { position: relative; flex: 1; max-width: 420px; }
+#buildingSearch {
+  width: 100%; padding: 7px 32px 7px 12px;
+  border: 1.5px solid #ddd; border-radius: 22px;
+  font-size: 0.82rem; outline: none; background: #fafafa;
+}
+#buildingSearch:focus { border-color: #7c3aed; background: #fff; }
+
+#searchClear {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: #aaa; display: none;
+}
+
+#buildingDropdown {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.13); max-height: 240px;
+  overflow-y: auto; z-index: 2000; display: none;
+}
+
+.dropdown-item { padding: 9px 14px; font-size: 0.82rem; cursor: pointer; border-bottom: 1px solid #f3f3f3; display: flex; flex-direction: column; }
+.dropdown-item:hover { background: #f5f0ff; }
+.dropdown-item .item-name { font-weight: 500; }
+.dropdown-item .item-sub { font-size: 0.72rem; color: #888; }
+
+/* Match Badges */
+.match-badge { display: inline-block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; padding: 1px 5px; border-radius: 4px; margin-right: 4px; }
+.match-badge.room { background: #e0f2fe; color: #0369a1; }
+.match-badge.dept { background: #fef9c3; color: #854d0e; }
+.match-badge.office { background: #fce7f3; color: #9d174d; }
+.match-badge.dining { background: #dcfce7; color: #166534; }
+.match-badge.aka { background: #ede9fe; color: #5b21b6; }
+
+/* Pulse Animation */
+@keyframes pulseRing {
+  0% { transform: scale(1); opacity: 0.9; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.building-pulse-marker div {
+  width: 14px; height: 14px; border-radius: 50%; background: #7c3aed;
+  border: 3px solid #fff; box-shadow: 0 0 0 3px #7c3aed; animation: pulseRing 1.8s infinite;
+}
+
+#navBtn {
+  padding: 6px 10px; background: rgba(0,0,0,0.04); border: 1px solid #ddd;
+  border-radius: 6px; color: #444; font-size: 0.76rem; text-decoration: none;
+}
+
+.hidden { display: none !important; }
