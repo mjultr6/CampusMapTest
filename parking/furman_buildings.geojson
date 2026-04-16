@@ -331,7 +331,7 @@
     "addr:state": "SC",
     "addr:street": "Furman Mall Avenue",
     "building": "university",
-    "name": "John L Pyler Hall (PYR)",
+    "name": "John L Plyler Hall (PYR)",
     "type": "multipolygon",
     "departments":["Physics Department", "Biology Department",
                    "Chemistry Department",
@@ -2257,7 +2257,7 @@
         "@id": "North Village B",
         "addr:housenumber": "North Village B",
         "building": "dormitory",
-        "name": "B"
+        "name": "North Village B"
       },
       "geometry": {
         "type": "Polygon",
@@ -2911,7 +2911,7 @@
         "@id": "North Village E",
         "addr:housenumber": "North Village E",
         "building": "dormitory",
-        "name": "E"
+        "name": "North Village E"
       },
       "geometry": {
         "type": "Polygon",
