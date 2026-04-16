@@ -4,38 +4,15 @@ title: Campus Events Map
 ---
 
 <script>
+  // Fix the navigation button to point to Parking
   document.addEventListener('DOMContentLoaded', () => {
     const navBtn = document.getElementById('navBtn');
     if (navBtn) {
-      // Set the path to your parking map
       navBtn.href = "{{ '/parking/parking_map.html' | relative_url }}";
       navBtn.innerHTML = "🅿️ Parking Map";
     }
   });
 </script>
-
-<div class="header-row2">
-    <div class="divider"></div>
-    <div id="dateWrapper">
-        <label>Select Date</label>
-        <button id="calBtn">
-            <span class="cal-icon">📅</span>
-            <span class="cal-text" id="calBtnText">— Choose a date —</span>
-            <span class="cal-arrow">▼</span>
-        </button>
-    </div>
-    
-    <div id="layerToggles">
-        <button class="layer-toggle on" data-layer="clp">
-            <span class="toggle-dot"></span>CLP
-        </button>
-        <button class="layer-toggle on" data-layer="athletics">
-            <span class="toggle-dot"></span>Athletics
-        </button>
-    </div>
-    
-    <div id="eventCount"></div>
-</div>
 
 <div id="calPopup">
     <div class="cal-nav">
@@ -55,13 +32,6 @@ title: Campus Events Map
 <div id="noDateMsg">
     <div class="big">Select a date above</div>
     <div class="small">to see events on campus</div>
-</div>
-
-<div id="legend">
-    <div><span class="legend-swatch" style="background:#9B6FD4;"></span> CLP event</div>
-    <div><span class="legend-swatch" style="background:#C9991A;"></span> Athletics event</div>
-    <div><span class="legend-swatch" style="background:linear-gradient(135deg,#9B6FD4 50%,#C9991A 50%);"></span> Both active</div>
-    <div><span class="legend-swatch" style="background:rgba(80,50,130,0.1); border:1px solid rgba(130,90,200,0.2)"></span> No events</div>
 </div>
 
 <script>

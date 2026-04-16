@@ -3,8 +3,17 @@ layout: map-template
 title: Campus Parking Map
 ---
 
-<script src="{{ '/assets/js/map-logic.js' | relative_url }}"></script>
-
 <script>
-  console.log("Parking Map logic initialized.");
+    // Navigation Fix
+    document.addEventListener('DOMContentLoaded', () => {
+        const navBtn = document.getElementById('navBtn');
+        navBtn.href = "{{ '/events/events_map.html' | relative_url }}";
+        navBtn.innerHTML = "🗓️ Events Map";
+    });
+
+    // Data Paths
+    const PARKING_GEOJSON = "{{ '/furman_parking.geojson' | relative_url }}";
+    const BUILDINGS_DATA = "{{ '/furman_buildings.geojson' | relative_url }}";
 </script>
+
+<script src="{{ '/assets/js/map-logic.js' | relative_url }}"></script>

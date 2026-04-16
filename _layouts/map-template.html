@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ page.title }} | Furman University</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"></head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
 <body>
 
-    {% include header.html %}
+<header id="header">
+    <div class="header-row1">
+        <h1><span>Furman University</span>{{ page.title }}</h1>
+        <a href="#" id="navBtn">Switch Map</a>
+    </div>
 
-    <div id="map"></div>
+    <div class="header-row2">
+        <div class="divider"></div>
+        
+        {% if page.url contains 'events' %}
+            <div id="dateWrapper">
+                <button id="calBtn">
+                    <span class="cal-icon">📅</span>
+                    <span class="cal-text" id="calBtnText">Choose Date</span>
+                    <span class="cal-arrow">▼</span>
+                </button>
+            </div>
+            <div id="layerToggles">
+                <button class="layer-toggle on" data-layer="clp">CLP</button>
+                <button class="layer-toggle on" data-layer="athletics">Athletics</button>
+            </div>
+            <div id="eventCount"></div>
+        {% else %}
+            <div id="modeTabs">
+                <button class="mode-tab active" data-mode="parking">Parking</button>
+                <button class="mode-tab" data-mode="buildings">Buildings</button>
+            </div>
+            <div id="parkingControls">
+                <div id="passDropdownWrap">
+                    <select id="passSelect">
+                        <option value="base" selected>Default / All Lots</option>
+                        <option value="Green">South Housing (Green)</option>
+                        <option value="Yellow">Clark Murphy (Yellow)</option>
+                        <option value="BabyBlue">North Village (Baby Blue)</option>
+                        <option value="Silver">Senior (Silver)</option>
+                        <option value="Orange">Commuter (Orange)</option>
+                        <option value="Purple">Faculty/Staff (Purple)</option>
+                        <option value="All">Show All Permits</option>
+                    </select>
+                    <div id="dropdownArrow">▼</div>
+                </div>
+            </div>
+            <div id="buildingControls" class="hidden">
+                <div id="buildingSearchWrap">
+                    <input type="text" id="buildingSearch" placeholder="Search buildings or rooms..." autocomplete="off">
+                    <button id="searchClear">✕</button>
+                    <div id="buildingDropdown"></div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</header>
 
-    {{ content }}
+<div id="map"></div>
+
+{{ content }}
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </body>
 </html>
