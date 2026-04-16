@@ -215,7 +215,25 @@ html, body { width: 100%; height: 100%; font-family: 'DM Sans', sans-serif; }
 .dropdown-item:last-child { border-bottom: none; }
 .dropdown-item:hover { background: #f5f0ff; }
 .dropdown-item .item-name { font-weight: 500; color: #1a1a1a; }
-.dropdown-item .item-rooms { font-size: 0.72rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-item .item-sub  { font-size: 0.72rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Match type badges */
+.match-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.match-badge.room       { background: #e0f2fe; color: #0369a1; }
+.match-badge.dept       { background: #fef9c3; color: #854d0e; }
+.match-badge.office     { background: #fce7f3; color: #9d174d; }
+.match-badge.dining     { background: #dcfce7; color: #166534; }
+.match-badge.aka        { background: #ede9fe; color: #5b21b6; }
 
 /* Nav button */
 #navBtn {
@@ -253,6 +271,25 @@ html, body { width: 100%; height: 100%; font-family: 'DM Sans', sans-serif; }
   box-shadow: 0 0 0 3px #7c3aed;
   animation: pulseRing 1.8s ease-out infinite;
 }
+
+/* ── Popup extras ─────────────────────────────────── */
+.popup-section { margin-top: 6px; }
+.popup-section-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #999;
+  margin-bottom: 2px;
+}
+.popup-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.76rem;
+  color: #7c3aed;
+  text-decoration: none;
+}
+.popup-link:hover { text-decoration: underline; }
 
 /* ── Leaflet overrides ────────────────────────────── */
 .leaflet-top.leaflet-left { top: calc(var(--header-height) + 10px); }
@@ -312,7 +349,9 @@ html, body { width: 100%; height: 100%; font-family: 'DM Sans', sans-serif; }
   <!-- Building search controls -->
   <div id="buildingControls" class="hidden">
     <div id="buildingSearchWrap">
-      <input id="buildingSearch" type="text" placeholder="Search buildings or rooms…" autocomplete="off" />
+      <input id="buildingSearch" type="text"
+             placeholder="Search buildings, rooms, departments, dining…"
+             autocomplete="off" />
       <button id="searchClear" title="Clear">✕</button>
       <div id="buildingDropdown"></div>
     </div>
@@ -467,14 +506,41 @@ let buildingLayer = null;
 let highlightLayer = null;
 let pulseMarker   = null;
 
-// Build a flat search index: [{name, rooms[], feature}]
+/**
+ * Each index entry:
+ * {
+ *   name        : string,
+ *   aka         : string[],   // alternate names / abbreviations
+ *   rooms       : string[],
+ *   departments : string[],
+ *   offices     : string[],
+ *   dining      : string[],
+ *   url         : string | null,
+ *   feature     : GeoJSON Feature
+ * }
+ */
 let buildingIndex = [];
+
+// Normalise a raw property that may be a string, array, or absent
+function toArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+}
 
 function buildSearchIndex(geojson) {
   buildingIndex = geojson.features.map(f => {
-    const name  = f.properties.name  || f.properties['@id'] || 'Unnamed';
-    const rooms = Array.isArray(f.properties.rooms) ? f.properties.rooms : [];
-    return { name, rooms, feature: f };
+    const p = f.properties || {};
+    return {
+      name:        p.name || p['@id'] || 'Unnamed',
+      aka:         toArray(p.aka),
+      rooms:       toArray(p.rooms),
+      departments: toArray(p.departments || p.department),
+      offices:     toArray(p.offices     || p.office),
+      dining:      toArray(p.dining      || p.amenity === 'cafe' ? p.name : null),
+      url:         p.url || p.website || null,
+      feature: f
+    };
   });
 }
 
@@ -484,33 +550,80 @@ function getFeatureCenter(feature) {
 }
 
 function buildingPopupHtml(entry) {
-  const addr = entry.feature.properties['addr:street']
-    ? `${entry.feature.properties['addr:housenumber'] || ''} ${entry.feature.properties['addr:street']}`.trim()
+  const p    = entry.feature.properties || {};
+  const addr = p['addr:street']
+    ? `${p['addr:housenumber'] || ''} ${p['addr:street']}`.trim()
     : null;
 
-  // Deduplicate rooms
   const uniqueRooms = [...new Set(
     entry.rooms.map(r => r.includes(',') ? r.split(',')[0].trim() : r.trim())
   )].filter(Boolean);
 
   let html = `<strong>${entry.name}</strong>`;
-  if (addr) html += `<br><span style="color:#888;font-size:0.76rem">${addr}</span>`;
-  if (uniqueRooms.length) {
-    html += `<div class="room-list"><ul style="list-style:none;padding:0">`;
-    uniqueRooms.forEach(r => { html += `<li>📍 ${r}</li>`; });
-    html += `</ul></div>`;
+
+  // Alternate names / AKA
+  if (entry.aka.length) {
+    html += `<br><span style="color:#7c3aed;font-size:0.74rem">Also known as: ${entry.aka.join(' · ')}</span>`;
   }
+
+  if (addr) {
+    html += `<br><span style="color:#888;font-size:0.76rem">${addr}</span>`;
+  }
+
+  // Departments
+  if (entry.departments.length) {
+    html += `<div class="popup-section">
+      <div class="popup-section-label">🎓 Departments</div>
+      <ul class="room-list" style="list-style:none;padding:0">
+        ${entry.departments.map(d => `<li>• ${d}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Offices
+  if (entry.offices.length) {
+    html += `<div class="popup-section">
+      <div class="popup-section-label">🏢 Offices</div>
+      <ul class="room-list" style="list-style:none;padding:0">
+        ${entry.offices.map(o => `<li>• ${o}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Dining
+  if (entry.dining.length) {
+    html += `<div class="popup-section">
+      <div class="popup-section-label">🍽 Dining</div>
+      <ul class="room-list" style="list-style:none;padding:0">
+        ${entry.dining.map(d => `<li>• ${d}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Rooms
+  if (uniqueRooms.length) {
+    html += `<div class="popup-section">
+      <div class="popup-section-label">📍 Rooms</div>
+      <ul class="room-list" style="list-style:none;padding:0">
+        ${uniqueRooms.map(r => `<li>${r}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Website link
+  if (entry.url) {
+    html += `<a class="popup-link" href="${entry.url}" target="_blank" rel="noopener">🔗 Visit website ↗</a>`;
+  }
+
   return html;
 }
 
 function flyToBuilding(entry) {
   const center = getFeatureCenter(entry.feature);
 
-  // Remove previous highlight
   if (highlightLayer && map.hasLayer(highlightLayer)) highlightLayer.remove();
   if (pulseMarker    && map.hasLayer(pulseMarker))    pulseMarker.remove();
 
-  // Highlight the building polygon
   highlightLayer = L.geoJSON(entry.feature, {
     style: {
       color: '#7c3aed', weight: 4, opacity: 1,
@@ -518,7 +631,6 @@ function flyToBuilding(entry) {
     }
   }).addTo(map);
 
-  // Pulse marker at centroid
   const icon = L.divIcon({
     className: 'building-pulse-marker',
     html: '<div></div>',
@@ -527,13 +639,16 @@ function flyToBuilding(entry) {
   });
   pulseMarker = L.marker(center, { icon }).addTo(map);
 
-  // Open popup
   highlightLayer.bindPopup(buildingPopupHtml(entry)).openPopup();
-
   map.flyTo(center, 18, { duration: 1.1 });
 }
 
-// Search logic
+/* ── Search logic ─────────────────────────────────── */
+
+/**
+ * Returns results in the form:
+ *   { entry, matchType: 'name'|'aka'|'room'|'dept'|'office'|'dining', matchText: string }
+ */
 function searchBuildings(query) {
   if (!query.trim()) return [];
   const q = query.toLowerCase();
@@ -543,41 +658,88 @@ function searchBuildings(query) {
   buildingIndex.forEach(entry => {
     if (seen.has(entry.name)) return;
 
-    // Match by building name
-    const nameMatch = entry.name.toLowerCase().includes(q);
-
-    // Match by room name
-    const roomMatch = entry.rooms.some(r => r.toLowerCase().includes(q));
-
-    if (nameMatch || roomMatch) {
+    // Priority order: name → aka → dept → office → dining → room
+    if (entry.name.toLowerCase().includes(q)) {
       seen.add(entry.name);
-      results.push({ entry, byRoom: !nameMatch && roomMatch });
+      results.push({ entry, matchType: 'name', matchText: entry.name });
+      return;
+    }
+
+    const akaHit = entry.aka.find(a => a.toLowerCase().includes(q));
+    if (akaHit) {
+      seen.add(entry.name);
+      results.push({ entry, matchType: 'aka', matchText: akaHit });
+      return;
+    }
+
+    const deptHit = entry.departments.find(d => d.toLowerCase().includes(q));
+    if (deptHit) {
+      seen.add(entry.name);
+      results.push({ entry, matchType: 'dept', matchText: deptHit });
+      return;
+    }
+
+    const officeHit = entry.offices.find(o => o.toLowerCase().includes(q));
+    if (officeHit) {
+      seen.add(entry.name);
+      results.push({ entry, matchType: 'office', matchText: officeHit });
+      return;
+    }
+
+    const diningHit = entry.dining.find(d => d.toLowerCase().includes(q));
+    if (diningHit) {
+      seen.add(entry.name);
+      results.push({ entry, matchType: 'dining', matchText: diningHit });
+      return;
+    }
+
+    const roomHit = entry.rooms.find(r => r.toLowerCase().includes(q));
+    if (roomHit) {
+      seen.add(entry.name);
+      results.push({ entry, matchType: 'room', matchText: roomHit });
     }
   });
 
   return results.slice(0, 20);
 }
 
-// Dropdown rendering
-const searchInput    = document.getElementById('buildingSearch');
-const searchClear    = document.getElementById('searchClear');
-const dropdown       = document.getElementById('buildingDropdown');
+/* ── Dropdown rendering ───────────────────────────── */
+const searchInput = document.getElementById('buildingSearch');
+const searchClear = document.getElementById('searchClear');
+const dropdown    = document.getElementById('buildingDropdown');
+
+const badgeLabels = {
+  aka:    'alias',
+  room:   'room',
+  dept:   'dept',
+  office: 'office',
+  dining: 'dining'
+};
 
 function renderDropdown(results) {
   if (!results.length) {
     dropdown.style.display = 'none';
     return;
   }
-  dropdown.innerHTML = results.map(({ entry, byRoom }) => {
-    const roomPreview = byRoom
-      ? entry.rooms.find(r => r.toLowerCase().includes(searchInput.value.toLowerCase())) || ''
-      : (entry.rooms.length ? entry.rooms[0] : '');
+
+  dropdown.innerHTML = results.map(({ entry, matchType, matchText }) => {
+    const showBadge = matchType !== 'name';
+    const badgeHtml = showBadge
+      ? `<span class="match-badge ${matchType}">${badgeLabels[matchType] || matchType}</span>`
+      : '';
+
+    // Sub-line: show what was matched (if not the name itself)
+    const subLine = showBadge
+      ? `${badgeHtml}${matchText}`
+      : (entry.departments[0] || entry.offices[0] || entry.dining[0] || entry.rooms[0] || '');
+
     return `
       <div class="dropdown-item" data-name="${entry.name}">
-        <span class="item-name">${entry.name}</span>
-        ${roomPreview ? `<span class="item-rooms">${roomPreview}</span>` : ''}
+        <span class="item-name">${entry.name}${entry.aka.length && matchType !== 'aka' ? ` <span style="color:#aaa;font-weight:400;font-size:0.74rem">(${entry.aka[0]})</span>` : ''}</span>
+        ${subLine ? `<span class="item-sub">${subLine}</span>` : ''}
       </div>`;
   }).join('');
+
   dropdown.style.display = 'block';
 
   dropdown.querySelectorAll('.dropdown-item').forEach(el => {
@@ -609,7 +771,6 @@ searchClear.addEventListener('click', () => {
   searchInput.focus();
 });
 
-// Close dropdown when clicking outside
 document.addEventListener('click', e => {
   if (!document.getElementById('buildingSearchWrap').contains(e.target)) {
     dropdown.style.display = 'none';
@@ -635,8 +796,7 @@ function setMode(mode) {
     parkingCtrl.classList.remove('hidden');
     buildingCtrl.classList.add('hidden');
 
-    // Show parking layers, hide building layers
-    if (buildingLayer && map.hasLayer(buildingLayer)) buildingLayer.remove();
+    if (buildingLayer  && map.hasLayer(buildingLayer))  buildingLayer.remove();
     if (highlightLayer && map.hasLayer(highlightLayer)) highlightLayer.remove();
     if (pulseMarker    && map.hasLayer(pulseMarker))    pulseMarker.remove();
 
@@ -647,11 +807,9 @@ function setMode(mode) {
     parkingCtrl.classList.add('hidden');
     buildingCtrl.classList.remove('hidden');
 
-    // Hide parking layers
     Object.values(parkingLayerCache).forEach(l => { if (map.hasLayer(l)) l.remove(); });
     if (map.hasLayer(maskLayer)) maskLayer.remove();
 
-    // Show building base layer
     if (buildingData && !buildingLayer) {
       buildingLayer = L.geoJSON(buildingData, {
         style: {
@@ -659,24 +817,24 @@ function setMode(mode) {
           fillColor: '#ddd6fe', fillOpacity: 0.35
         },
         onEachFeature: (f, l) => {
-          const name  = f.properties.name || f.properties['@id'] || 'Unnamed';
-          const rooms = Array.isArray(f.properties.rooms) ? f.properties.rooms : [];
-          const uniqueRooms = [...new Set(
-            rooms.map(r => r.includes(',') ? r.split(',')[0].trim() : r.trim())
-          )].filter(Boolean);
-          let popup = `<strong>${name}</strong>`;
-          if (uniqueRooms.length) {
-            popup += `<div class="room-list"><ul style="list-style:none;padding:0">`;
-            uniqueRooms.forEach(r => { popup += `<li>📍 ${r}</li>`; });
-            popup += `</ul></div>`;
-          }
-          l.bindPopup(popup);
+          // Build a minimal index entry on the fly for the base-layer popup
+          const p = f.properties || {};
+          const entry = {
+            name:        p.name || p['@id'] || 'Unnamed',
+            aka:         toArray(p.aka),
+            rooms:       toArray(p.rooms),
+            departments: toArray(p.departments || p.department),
+            offices:     toArray(p.offices || p.office),
+            dining:      toArray(p.dining),
+            url:         p.url || p.website || null,
+            feature:     f
+          };
+          l.bindPopup(buildingPopupHtml(entry));
         }
       });
     }
     if (buildingLayer && !map.hasLayer(buildingLayer)) buildingLayer.addTo(map);
 
-    // Bring highlight layers back on top if active
     if (highlightLayer && map.hasLayer(highlightLayer)) highlightLayer.bringToFront();
     if (pulseMarker    && map.hasLayer(pulseMarker))    pulseMarker.bringToFront();
 
@@ -709,14 +867,12 @@ Promise.all([
   fetch('furman_parking.geojson').then(r => r.json()).catch(() => null),
   fetch('furman_buildings.geojson').then(r => r.json()).catch(() => null)
 ]).then(([parking, buildings]) => {
-  // Parking
   if (parking) {
     parkingData = parking;
     showParkingLayer(null);
     maskLayer.addTo(map);
   }
 
-  // Buildings
   if (buildings) {
     buildingData = buildings;
     buildSearchIndex(buildings);

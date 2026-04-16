@@ -10,8 +10,7 @@
         "@id": "Amphitheater",
         "amenity": "theatre",
         "name": "Amphitheater",
-        "rooms": ["Amphitheater, Furman Lake Amphitheater Parking Lot",
-                  "Amphitheater"]
+        "rooms": ["Amphitheater"]
       },
       "geometry": {
         "type": "Polygon",
@@ -63,9 +62,9 @@
     "amenity": "place_of_worship",
     "building": "church",
     "name": "Charles E Daniel Chapel",
+    "offices":"Office of Spiritual Life",
     "religion": "christian",
-    "rooms": ["Chapel Bryan Garden Room,Chapel Bryan Garden Room",
-     "Chapel Main Sanctuary",
+    "rooms": ["Chapel Bryan Garden Room",
      "Chapel Main Sanctuary"]
   },
   "geometry": {
@@ -95,7 +94,9 @@
   "properties": {
     "@id": "Daniel Music Building",
     "building": "university",
-    "name": "Daniel Music Building",
+    "name": "Daniel Music Building (DMB)",
+    "aka": "Mubu",
+    "departments": "Music Department",
     "rooms": ["Daniel Recital Hall"]
   },
   "geometry": {
@@ -151,7 +152,13 @@
     "addr:street": "Furman Mall Avenue",
     "building": "university",
     "layer": "1",
-    "name": "Furman Hall",
+    "name": "Furman Hall (FUR)",
+    "departments": ["Philosophy Department", "English Department", 
+                    "Religion Department", "Communications Department",
+                    "History Department", "Religions Department",
+                    "LanguModern Languages and Literatures Department", "Asian Studies", 
+                    "Classics Department", "Women and Gender Studies", 
+                    "Poverty Studies", "Anthropology Department"],
     "rooms":["Furman Hall 214 - McEachern Lecture Hall"]
   },
   "geometry": {
@@ -182,10 +189,12 @@
   "type": "Feature",
   "properties": {
     "@id": "Daniel Dining Hall",
+    "url":"https://furman.cafebonappetit.com/cafe/daniel-dining-hall/",
     "amenity": "restaurant",
     "building": "university",
     "building:levels": "2",
-    "name": "Charles Daniel Dining Hall",
+    "dining":"Blend and Bowl, Dining Hall",
+    "name": "Charles Daniel Dining Hall (DH)",
     "rooms":["Daniel Dining Hall", "Hartness Pavilion", "Trustees Dining Room"],
     "type": "multipolygon"
   },
@@ -229,7 +238,10 @@
     "addr:state": "SC",
     "addr:street": "Mary Peace Sterling Circle",
     "building": "university",
-    "name": "John E Johns Hall",
+    "name": "John E Johns Hall (JHN)",
+    "departments":["Politics and International Affairs Department", 
+                   "Psychology Department", "Sociology Departmnent",
+                  "Neuroscience Department"],
     "rooms":["Johns Hall 101","Johns Hall 109"]
   },
   "geometry": {
@@ -319,8 +331,11 @@
     "addr:state": "SC",
     "addr:street": "Furman Mall Avenue",
     "building": "university",
-    "name": "John L Pyler Hall",
+    "name": "John L Pyler Hall (PYR)",
     "type": "multipolygon",
+    "departments":["Physics Department", "Biology Department",
+                   "Chemistry Department",
+                   "Earth, Environmental, and Sustainability Sciences Department"],
     "rooms":["Patrick Lecture Hall"]
   },
   "geometry": {
@@ -408,9 +423,10 @@
 {
   "type": "Feature",
   "properties": {
-    "@id": "Roe Art Building",
+    "@id": "Roe Art Building (RAB)",
     "building": "university",
     "name": "Roe Art Building",
+    "departments":"Art Department",
     "rooms": ["Roe Art Building Gallery",
               "Roe Art Building Littlejohn Lecture Room"]
   },
@@ -435,7 +451,8 @@
     "@id": "Playhouse",
     "amenity": "theatre",
     "building": "yes",
-    "name": "Furman Theatre"
+    "name": "Furman Theatre (TPH)",
+    "departments":"Theatre Arts Department"
   },
   "geometry": {
     "type": "Polygon",
@@ -457,11 +474,13 @@
     "@id": "Trone Student Center",
     "building": "university",
     "name": "Trone Student Center",
+    "dining":["P-Den Sushi Gusto, Moes Southwest Grill and Chick-Fil-A", "The Paddock"],
+    "offices":["Fraternity & Sorority Life", "Student Life", 
+               "Student Involvement", "Malone Center for Career Engagement",
+               "Shucker Center for Leadership Development", "Bridges to a Brighter Future at Furman",
+               "Bookstore"],
     "type": "multipolygon",
     "rooms":["Trone Student Center Burgiss Theater",
-             "Trone Student Center Burgiss Theater, Trone Student Center Point of View Fire Pit",
-             "Trone Student Center Watkins Room",
-             "Trone Student Center Watkins Room Center Section",
              "Trone Student Center Watkins Room Lobby, Trone Student Center Watkins Room"]
   },
   "geometry": {
@@ -507,8 +526,11 @@
     "building": "yes",
     "name": "Younts Conference Center",
     "rooms":["Younts Conference Center Great Hall",
-             "Younts Conference Center Great Hall, Younts Conference Center Shaw Hall, Younts Conference Center Birmingham Room 110A, Younts Conference Center Atlanta Room 120B, Younts Conference Center Atlanta Room 120A, Younts Conference Center Birmingham Room",
-             "Younts Conference Center Shaw Hall"]
+            "Younts Conference Center Birmingham Room 110A", 
+            "Younts Conference Center Atlanta Room 120B",
+            "Younts Conference Center Atlanta Room 120A", 
+            "Younts Conference Center Birmingham Room",
+            "Younts Conference Center Shaw Hall"]
   },
   "geometry": {
     "type": "Polygon",
@@ -902,7 +924,7 @@
     "addr:state": "SC",
     "addr:street": "Furman Lake Lane",
     "building": "university",
-    "name": "James B. Duke Library",
+    "name": "Earle Health Lounge & Trone Center for Mental Fitness",
     "type": "multipolygon",
     "rooms": []
   },
@@ -1190,7 +1212,8 @@
     "@id": "Furman University Police Department (Estridge Commons, FUPD)",
     "amenity": "police",
     "building": "yes",
-    "name": "Estridge Commons",
+    "name": "Furman University Police Department (FUPD)",
+    "aka":"Estridge Ccommons",
     "type": "multipolygon",
     "rooms": []
   },
@@ -1239,6 +1262,8 @@
     "@id": "Furman Administration",
     "building": "yes",
     "name": "Furman Administration",
+    "offices":["Enrollment Services", "Finance and Administration", 
+               "Human Resources"],
     "type": "multipolygon",
     "rooms": []
   },
@@ -1376,7 +1401,9 @@
       "properties": {
         "@id": "Hipp Hall",
         "building": "university",
-        "name": "Hipp Hall"
+        "name": "Hipp Hall (HIP)",
+        "departments":["Business and Accounting", "Education"],
+        "offices":"Student Office for Accessibility Resources"
       },
       "geometry": {
         "type": "Polygon",
@@ -1443,6 +1470,8 @@
       "type": "Feature",
       "properties": {
         "@id": "Herman P. Lay Physical Activities Center",
+        "aka":"PAC",
+        "departments":["Health Sciences", "Military Science (ROTC)"],
         "building": "yes"
       },
       "geometry": {
@@ -1612,7 +1641,10 @@
       "properties": {
         "@id": "Richard W. Riley Hall",
         "building": "university",
-        "name": "Richard W Riley Hall"
+        "name": "Richard W Riley Hall (RLY)", 
+        "rooms": ["The Fishbowl"],
+        "departments": ["Computer Science Department", "Economics Department",
+                        "Mathematics Department", "Data Analytics"]
       },
       "geometry": {
         "type": "Polygon",
@@ -1680,7 +1712,7 @@
       "properties": {
         "@id": "Marshall and Vera Lea Rinker Hall",
         "building": "university",
-        "name": "Marshall and Vera Lea Rinker Hall"
+        "name": "Marshall and Vera Lea Rinker Hall (RNK)"
       },
       "geometry": {
         "type": "Polygon",
@@ -1885,7 +1917,7 @@
        {
       "type": "Feature",
       "properties": {
-        "@id": "Townes Center for Science",
+        "@id": "Townes Center for Science (TNS)",
         "building": "university",
         "name": "Townes Center for Science"
       },
@@ -4154,7 +4186,8 @@
       "properties": {
         "@id": "Blackwell Hall",
         "building": "dormitory",
-        "name": "Blackwell Hall"
+        "name": "Blackwell Hall",
+        "offices":"Center for Interpersonal Connections"
         },
       "geometry": {
         "type": "Polygon",
@@ -4784,6 +4817,152 @@
         ]
       },
       "id": "Green Belt Housing: Shack"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "The Rabbit Hole",
+        "name": "The Rabbit Hole- Furman University Outdoors Club (FUOC)",
+        "building": "yes"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.4460451,
+              34.9189432
+            ],
+            [
+              -82.4460292,
+              34.9190904
+            ],
+            [
+              -82.4461308,
+              34.9190977
+            ],
+            [
+              -82.4461467,
+              34.9189506
+            ],
+            [
+              -82.4460451,
+              34.9189432
+            ]
+          ]
+        ]
+      },
+      "id": "The Rabbit Hole"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "Duke Library",
+        "amenity": "library",
+        "building": "yes",
+        "dining":"Library Cafe",
+        "name": "James Buchanan Duke Library (LIB)",
+        "offices":["Writing & Media Lab", "Peer Assisted Learning",
+                   "Information Technology Services", "Center for Academic Success",
+                   "Cothran Center for Vocational Learning", "Special Collections and Archives"],
+        "operator": "Furman University"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.4385248,
+              34.9246906
+            ],
+            [
+              -82.4392158,
+              34.9250889
+            ],
+            [
+              -82.4393162,
+              34.924965
+            ],
+            [
+              -82.4393397,
+              34.9249785
+            ],
+            [
+              -82.43939,
+              34.9249536
+            ],
+            [
+              -82.4394364,
+              34.9249248
+            ],
+            [
+              -82.4394745,
+              34.9248942
+            ],
+            [
+              -82.439508,
+              34.9248568
+            ],
+            [
+              -82.4395362,
+              34.9248183
+            ],
+            [
+              -82.4395573,
+              34.924783
+            ],
+            [
+              -82.4395724,
+              34.9247391
+            ],
+            [
+              -82.4395828,
+              34.9246973
+            ],
+            [
+              -82.4395627,
+              34.9246856
+            ],
+            [
+              -82.4396645,
+              34.9245656
+            ],
+            [
+              -82.4389959,
+              34.9241802
+            ],
+            [
+              -82.4388482,
+              34.9243524
+            ],
+            [
+              -82.4387779,
+              34.9243119
+            ],
+            [
+              -82.4387664,
+              34.9243235
+            ],
+            [
+              -82.438633,
+              34.9244826
+            ],
+            [
+              -82.4385682,
+              34.9245565
+            ],
+            [
+              -82.4386161,
+              34.9245841
+            ],
+            [
+              -82.4385248,
+              34.9246906
+            ]
+          ]
+        ]
+      },
+      "id": "Duke Library"
     }
 
   ]

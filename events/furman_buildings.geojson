@@ -895,14 +895,14 @@
 {
   "type": "Feature",
   "properties": {
-    "@id": "Earle Health Lounge",
+    "@id": "Earle Health",
     "addr:city": "Greenville",
     "addr:housenumber": "80",
     "addr:postcode": "29613",
     "addr:state": "SC",
     "addr:street": "Furman Lake Lane",
     "building": "university",
-    "name": "James B. Duke Library",
+    "name": "Earle Health",
     "type": "multipolygon",
     "rooms": []
   },
@@ -4784,6 +4784,115 @@
         ]
       },
       "id": "Green Belt Housing: Shack"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "Duke Library",
+        "amenity": "library",
+        "building": "yes",
+        "name": "James Buchanan Duke Library (LIB)",
+        "offices":["Writing & Media Lab", "Peer Assisted Learning",
+                   "Information Technology Services", "Center for Academic Success",
+                   "Cothran Center for Vocational Learning", "Special Collections and Archives"],
+        "operator": "Furman University"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.4385248,
+              34.9246906
+            ],
+            [
+              -82.4392158,
+              34.9250889
+            ],
+            [
+              -82.4393162,
+              34.924965
+            ],
+            [
+              -82.4393397,
+              34.9249785
+            ],
+            [
+              -82.43939,
+              34.9249536
+            ],
+            [
+              -82.4394364,
+              34.9249248
+            ],
+            [
+              -82.4394745,
+              34.9248942
+            ],
+            [
+              -82.439508,
+              34.9248568
+            ],
+            [
+              -82.4395362,
+              34.9248183
+            ],
+            [
+              -82.4395573,
+              34.924783
+            ],
+            [
+              -82.4395724,
+              34.9247391
+            ],
+            [
+              -82.4395828,
+              34.9246973
+            ],
+            [
+              -82.4395627,
+              34.9246856
+            ],
+            [
+              -82.4396645,
+              34.9245656
+            ],
+            [
+              -82.4389959,
+              34.9241802
+            ],
+            [
+              -82.4388482,
+              34.9243524
+            ],
+            [
+              -82.4387779,
+              34.9243119
+            ],
+            [
+              -82.4387664,
+              34.9243235
+            ],
+            [
+              -82.438633,
+              34.9244826
+            ],
+            [
+              -82.4385682,
+              34.9245565
+            ],
+            [
+              -82.4386161,
+              34.9245841
+            ],
+            [
+              -82.4385248,
+              34.9246906
+            ]
+          ]
+        ]
+      },
+      "id": "Duke Library"
     }
 
   ]
